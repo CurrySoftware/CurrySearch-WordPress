@@ -103,7 +103,103 @@ class CurrySearch {
 	 * Also registers tags and categories for later filtering
 	 */
 	static function full_indexing() {
+		//Get ApiKey from options
+		$key = get_option(CurrySearchConstants::APIKEY_OPTION, $default = false);
 
+		//Get published posts count
+		$count_posts = wp_count_posts();
+		$published_posts = (int)$count_posts->publish;
+
+		//Initiate indexing
+		CurrySearchUtils::ms_call_post(
+			CurrySearchConstants::INDEXING_START_URL, $key, $published_posts );
+
+		//Get all posts
+		//https://codex.wordpress.org/Template_Tags/get_posts
+		$postlist = get_posts(array(
+			'numberposts' => -1
+		));
+
+		//Chunk them into parts of 100
+		$post_chunks = array_chunk($postlist, 100);
+
+		//Register some fields that will be searched
+		//Title, body, post_tag and category
+		CurrySearchUtils::ms_call_post(CurrySearchConstants::REGISTER_FIELDS_URL, $key, array(
+			array(
+				'name' => 'title',
+				'data_type' => 'Text',
+				'field_type' => 'Search',
+				'autocomplete_source' => true
+			),
+			array(
+				'name' => 'body',
+				'data_type' => 'Text',
+				'field_type' => 'Search',
+				'autocomplete_source' => false
+			),
+			array(
+				'name' => 'post_tag',
+				'data_type' => 'Number',
+				'field_type' => 'Filter',
+				'autocomplete_source' => false
+			),
+			array(
+				'name' => 'category',
+				'data_type' => 'Number',
+				'field_type' => 'HierarchyFilter',
+				'autocomplete_source' => false
+			))
+		);
+
+		// Register categories
+		CurrySearch::register_hierarchy($key, "category");
+		$taxos = array("post_tag", "category");
+
+		$part_count = 0;
+		//Index posts chunk by chunk
+		foreach ($post_chunks as $chunk) {
+			$posts = array();
+			// For each post
+			foreach ($chunk as $post) {
+				$taxo_terms = array();
+				// Get all its taxo terms (category and tag)
+				foreach ($taxos as $taxo) {
+					$taxo_terms[$taxo] = array();
+					$wp_terms = get_the_terms( $post->ID, $taxo );
+					if (is_array($wp_terms) && count($wp_terms) > 0 ) {
+						foreach( $wp_terms as $term) {
+							array_push($taxo_terms[$taxo], $term->term_id);
+						}
+					}
+				}
+
+				// Add its title, contents and taxo terms to the processed chunk
+				array_push($posts, array(
+					"id" => $post->ID,
+					//TODO: Check if strip_tags is ok
+					//TODO: Check if html_entity_decode is ok
+					"raw_fields" =>  array (
+						array("title", html_entity_decode( strip_tags( $post->post_title), ENT_QUOTES, "UTF-8")),
+						array("body", html_entity_decode(
+							strip_tags( wp_strip_all_tags( $post->post_content ) ), ENT_QUOTES, "UTF-8" )),
+						//The need of implode for this sucks!
+						//Fix it!
+						array("post_tag", implode(" ", $taxo_terms["post_tag"])),
+						array("category", implode(" ", $taxo_terms["category"]))
+					)
+				));
+			}
+			// Send chunk to the server
+			CurrySearchUtils::ms_call_post(
+				CurrySearchConstants::INDEXING_PART_URL, $key, array("posts" => $posts));
+			$part_count += 1;
+			$posts = array();
+		}
+
+		// Wrapping up... telling the API that we are finished
+		CurrySearchUtils::ms_call_post(
+			CurrySearchConstants::INDEXING_DONE_URL, $key, array( 'parts' => $part_count ));
 	}
 
 	/**
