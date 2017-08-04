@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 // Get Plugin Path to
 define('CURRYSEARCH_PLUGIN_PATH', plugin_dir_path(__FILE__));
 // Load Constants
-
+include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs_constants.php');
 // And Utils
 
 
@@ -54,12 +54,35 @@ class CurrySearch {
 
 	public static $cs_query;
 
+	static $options;
+
 	/**
      * Gets the api_key of the current wordpress installation.
 	 */
 	static function get_apikey() {
-		$key = get_option(CurrySearchConstants::APIKEY_OPTION, $default = false);
+		if (!isset(CurrySearch::$options)) {
+			CurrySearch::$options = get_option(CurrySearchConstants::OPTIONS, $default = false);
+		}
+		$key = CurrySearch::$options["api_key"];
 		return $key;
+	}
+
+	/**
+	 * Gets the port to communicate to with the search system.
+	 * This port is assigned after the first successfull indexing process.
+	 * It lies between 36000 and 36099
+	 *
+	 * A nonexisten port indicates an unsuccessfull indexing process
+	 */
+	static function get_port() {
+		if (!isset(CurrySearch::$options)) {
+			CurrySearch::$options = get_option(CurrySearchConstants::OPTIONS, $default = false);
+		}
+		if (isset(CurrySearch::$options["port"])) {
+			$port = CurrySearch::$options["port"];
+			return $port;
+		}
+		return null;
 	}
 
 	/**
@@ -240,7 +263,8 @@ class CurrySearch {
 		//register index
 		$api_key = wp_remote_retrieve_body(wp_remote_get(CurrySearchConstants::REGISTER_URL));
 
-		add_option(CurrySearchConstants::APIKEY_OPTION, $api_key, /*deprecated parameter*/'', /*autoload*/'yes');
+		$options = ['api_key' => $api_key];
+		add_option(CurrySearchConstants::APIKEY_OPTION, $options, /*deprecated parameter*/'', /*autoload*/'yes');
 
 		self::full_indexing();
 	}
