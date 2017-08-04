@@ -347,6 +347,8 @@ class CurrySearchQuery{
 
 	/** Needed for communication with the api */
 	private $api_key;
+	/** Needed for communicating with the correct server */
+	private $port;
 	/** stores the original query string */
 	private $query;
 	/** contains the ids of all relevant posts */
@@ -368,10 +370,11 @@ class CurrySearchQuery{
 	 * Constructor.
      * Sets up all the hooks and gets the query result from the api-endpoint.
      */
-	function __construct($api_key, $hash, $query, $page) {
+	function __construct($api_key, $port, $hash, $query, $page) {
 		$this->hash = $hash;
 		$this->api_key = $api_key;
 		$this->query = $query;
+		$this->port = $port;
 		if ($page === 0) {
 			$this->page =  1;
 		} else {
@@ -429,10 +432,8 @@ class CurrySearchQuery{
 		$query_args["page_size"] = (int)get_option('posts_per_page');
 
 		// Start the request
-		$response = wp_remote_retrieve_body(
-			CurrySearchUtils::as_call_post(
-				CurrySearchConstants::SEARCH_URL, $this->api_key, $this->hash, $query_args)
-		);
+		$response =	CurrySearchUtils::as_call(
+				CurrySearchConstants::SEARCH_ACTION, $this->api_key, $this->port, $this->hash, $query_args);
 
 		// Parse the response
 		$decoded = json_decode($response, true);
@@ -443,7 +444,7 @@ class CurrySearchQuery{
 	}
 
 
-		/**
+	/**
 	 * Callback for 'posts_results'.
 	 *
 	 * Inject our results into the original WP_Query.
