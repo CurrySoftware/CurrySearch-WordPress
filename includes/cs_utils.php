@@ -33,6 +33,14 @@ class CurrySearchUtils{
 		return call(CurrySearchUtils::MANAGEMENT_URL.$action, $api_key, NULL, $payload);
 	}
 
+	private static function api_admin_warn() {
+		?>
+		<div class="notice notice-warn is-dismissible">
+        	<p>Problem occured during communication with the CurrySearch API! If problem persists please contact support@curry-software.com</p>
+		</div>
+		<?php
+	}
+
 	private static function call($url, $api_key, $session_hash, $payload) {
 		if (curl_installed()) {
 
@@ -43,13 +51,16 @@ class CurrySearchUtils{
 			$ch = curl_copy_handle(CurrySearchUtils::$curl_handle);
 
 			curl_setopt($ch, CURLOPT_URL, $url);
+
 			$header = array(
 				'Connection: keep-alive',
 				'Keep-Alive: 300',
 			);
+
 			if (isset($api_key)) {
 				array_push($header, 'X-CS-ApiKey: '.$api_key);
 			}
+
 			if (isset($session_hash)) {
 				array_push($header, 'X-CS-Session: '.$session_hash);
 			}
@@ -63,10 +74,15 @@ class CurrySearchUtils{
 			} else {
 				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 			}
+
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 			curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-			$response = curl_exec($ch);
 
+			$response = curl_exec($ch);
+			$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			if ($http_status != 200) {
+				add_action( 'admin_notices', array('CurrySearchUtils', 'api_admin_warn' ));
+			}
 			curl_close($ch);
 			return $reponse;
 		}

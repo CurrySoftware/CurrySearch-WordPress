@@ -33,6 +33,7 @@ define('CURRYSEARCH_PLUGIN_PATH', plugin_dir_path(__FILE__));
 // Load Constants
 include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs_constants.php');
 // And Utils
+include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs_utils.php');
 
 
 register_activation_hook(__FILE__, array('CurrySearch', 'install'));
@@ -221,8 +222,25 @@ class CurrySearch {
 		}
 
 		// Wrapping up... telling the API that we are finished
-		CurrySearchUtils::ms_call_post(
+	 	$port = CurrySearchUtils::ms_call_post(
 			CurrySearchConstants::INDEXING_DONE_URL, $key, array( 'parts' => $part_count ));
+
+		$options = ['api_key' => $api_key, 'port' => $port];
+		update_option(CurrySearchConstants::APIKEY_OPTION, $options, /*autoload*/'yes');
+
+		add_action( 'admin_notices', array('CurrySearch', 'successfull_indexing_notice'));
+	}
+
+
+	/**
+	 * Callback for a successfull indexing
+	 **/
+	static function successfull_indexing_notice() {
+		?>
+		<div class="notice notice-success is-dismissible">
+        	<p>Successfully indexed all your content to the CurrySearch API! You can use the CurrySearch Widget now.</p>
+		</div>
+		<?php
 	}
 
 	/**
@@ -261,7 +279,7 @@ class CurrySearch {
 	 */
 	static function install() {
 		//register index
-		$api_key = wp_remote_retrieve_body(wp_remote_get(CurrySearchConstants::REGISTER_URL));
+		$api_key = CurrySearchUtils::call_ms(CurrySearchConstants::REGISTER_ACTION, NULL, NULL);
 
 		$options = ['api_key' => $api_key];
 		add_option(CurrySearchConstants::APIKEY_OPTION, $options, /*deprecated parameter*/'', /*autoload*/'yes');
