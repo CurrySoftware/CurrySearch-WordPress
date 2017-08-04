@@ -10,6 +10,8 @@ class CurrySearchConstants {
 	const INDEXING_PART_ACTION = "full_indexing_part";
 	const INDEXING_DONE_ACTION = "full_indexing_done";
 
+	const SEARCHFORMTRANSIENT = "currysearch_searchform";
+
 	const OPTIONS  = "currysearch_options";
 }
 

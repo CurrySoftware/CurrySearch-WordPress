@@ -31,10 +31,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 // Get Plugin Path to
 define('CURRYSEARCH_PLUGIN_PATH', plugin_dir_path(__FILE__));
 // Load Constants
-include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs_constants.php');
+include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-constants.php');
 // And Utils
-include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs_utils.php');
-
+include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-utils.php');
+// And the Sidebar widget
+include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-search-widget.php');
 
 register_activation_hook(__FILE__, array('CurrySearch', 'install'));
 register_deactivation_hook( __FILE__, array('CurrySearch', 'uninstall' ));
