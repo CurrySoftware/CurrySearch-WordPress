@@ -14,13 +14,6 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 		);
 	}
 
-
-
-	private static function search_form() {
-
-
-	}
-
 	/**
 	 * Front-end display of widget.
 	 *
@@ -91,31 +84,28 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 		$url = CurrySearchConstants::QAC_URL;
 		$input_id = $id;
 
-		include_once(CURRYSEARCH_PLUGIN_PATH."templates/elm_hook.html");
+		// js thats hooks up the elm code
+		include_once(CURRYSEARCH_PLUGIN_PATH."public/html/elm-hook.html");
 
-		write_log("From Widget::widget");
+		// If we have an active query and filter results
+		// Render these
 		if (isset(CurrySearch::$cs_query) &&
 			isset(CurrySearch::$cs_query->filter_results) &&
 			is_array(CurrySearch::$cs_query->filter_results)) {
-			write_log("Got filters.. resolving!");
 
 			$this->render_filters($args);
 		}
 
 		echo $args['after_widget'];
-		$time = microtime(true) - $time_start;
-		write_log("Written widget in $time seconds!");
 	}
 
 
 	function render_filters($args) {
 		foreach (CurrySearch::$cs_query->filter_results as $taxo_slug=>$taxo_values) {
-			write_log("Handle taxo: $taxo_slug");
 			$taxo = get_taxonomy($taxo_slug);
-			write_log($taxo);
 			if (!isset($taxo)) {
-				//Taxonomy doesn't exist. This shouldn't happen
-				//TODO: Report error
+				// Taxonomy doesn't exist. This shouldn't happen.
+				// Just in case... ignore it
 				continue;
 			}
 			$term_ids = array_column($taxo_values, 'term');
@@ -149,7 +139,6 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 	/**
 	 * Back-end widget form.
 	 *
-	 * @see WP_Widget::form()
 	 *
 	 * @param array $instance Previously saved values from database.
 	 */

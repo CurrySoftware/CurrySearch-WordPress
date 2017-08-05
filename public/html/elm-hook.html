@@ -1,0 +1,40 @@
+<script>
+  function insertAfter(referenceNode, newNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  }
+
+  var flags = {
+    url: "<?php echo $url ?>",
+    public_api_key: "<?php echo $public_api_key ?>",
+    session_hash: "<?php echo $session_hash ?>"
+  }
+
+  var search_field = document.getElementById("<?php echo $input_id?>");
+  var suggest_list = document.createElement("div");
+  suggest_list.setAttribute("id", "curry-search-autocomplete");
+
+  insertAfter(search_field, suggest_list);
+  search_field.setAttribute("style", "position:relative;");
+
+  var app = Elm.CurrySearchAutoComplete.embed(suggest_list, flags);
+
+
+  search_field.addEventListener("keydown", function(e) {
+      if (e.keyCode == '38' ) {
+          app.ports.search_box_arrow.send(-1);
+          e.preventDefault();
+      } else if (e.keyCode == '40') {
+          app.ports.search_box_arrow.send(1);
+          e.preventDefault();
+      }
+  });
+
+  search_field.addEventListener("input", function(e) {
+      app.ports.search_box_input.send(e.target.value);
+  });
+
+  app.ports.suggest_choice.subscribe(function(term) {
+      search_field.value = term;
+      search_field.focus();
+  });
+</script>
