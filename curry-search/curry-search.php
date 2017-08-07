@@ -93,7 +93,7 @@ class CurrySearch {
 	 * the users browser.
 	 */
 	static function get_public_api_key() {
-		$key = get_option(CurrySearchConstants::APIKEY_OPTION, $default = false);
+		$key = CurrySearch::get_apikey();
 		return substr($key, 0, 16);
 	}
 
@@ -112,12 +112,12 @@ class CurrySearch {
 	 * These are mainly for query autocompletion
 	 */
 	static function enqueue_scripts() {
-		wp_register_script("currysearch_autocomplete.js",
-						   plugins_url("assets/currysearch_autocomplete.js", __FILE__));
+		wp_register_script("cs-autocomplete.min.js",
+						   plugins_url("public/js/cs-autocomplete.min.js", __FILE__));
 		wp_register_style("currysearch.css",
 						  plugins_url("assets/currysearch.css",  __FILE__));
 
-		wp_enqueue_script("currysearch_autocomplete.js");
+		wp_enqueue_script("cs-autocomplete.min.js");
 		wp_enqueue_style("currysearch.css");
 	}
 
@@ -129,15 +129,15 @@ class CurrySearch {
 	 */
 	static function full_indexing() {
 		//Get ApiKey from options
-		$key = get_option(CurrySearchConstants::APIKEY_OPTION, $default = false);
+		$key = CurrySearch::get_apikey();
 
 		//Get published posts count
 		$count_posts = wp_count_posts();
 		$published_posts = (int)$count_posts->publish;
 
 		//Initiate indexing
-		CurrySearchUtils::ms_call_post(
-			CurrySearchConstants::INDEXING_START_URL, $key, $published_posts );
+		CurrySearchUtils::call_ms(
+			CurrySearchConstants::INDEXING_START_ACTION, $key, $published_posts );
 
 		//Get all posts
 		//https://codex.wordpress.org/Template_Tags/get_posts
@@ -150,7 +150,7 @@ class CurrySearch {
 
 		//Register some fields that will be searched
 		//Title, body, post_tag and category
-		CurrySearchUtils::ms_call_post(CurrySearchConstants::REGISTER_FIELDS_URL, $key, array(
+		CurrySearchUtils::call_ms(CurrySearchConstants::REGISTER_FIELDS_ACTION, $key, array(
 			array(
 				'name' => 'title',
 				'data_type' => 'Text',
@@ -216,18 +216,18 @@ class CurrySearch {
 				));
 			}
 			// Send chunk to the server
-			CurrySearchUtils::ms_call_post(
-				CurrySearchConstants::INDEXING_PART_URL, $key, array("posts" => $posts));
+			CurrySearchUtils::call_ms(
+				CurrySearchConstants::INDEXING_PART_ACTION, $key, array("posts" => $posts));
 			$part_count += 1;
 			$posts = array();
 		}
 
 		// Wrapping up... telling the API that we are finished
-	 	$port = CurrySearchUtils::ms_call_post(
-			CurrySearchConstants::INDEXING_DONE_URL, $key, array( 'parts' => $part_count ));
+	 	$port = CurrySearchUtils::call_ms(
+			CurrySearchConstants::INDEXING_DONE_ACTION, $key, array( 'parts' => $part_count ));
 
-		$options = ['api_key' => $api_key, 'port' => $port];
-		update_option(CurrySearchConstants::APIKEY_OPTION, $options, /*autoload*/'yes');
+		$options = ['api_key' => $key, 'port' => $port];
+		update_option(CurrySearchConstants::OPTIONS, $options, /*autoload*/'yes');
 
 		add_action( 'admin_notices', array('CurrySearch', 'successfull_indexing_notice'));
 	}
@@ -267,8 +267,8 @@ class CurrySearch {
 			}
 
 			// And send them to the api.
-			CurrySearchUtils::ms_call_post(
-				CurrySearchConstants::REGISTER_HIERARCHY_URL, $key, array( $taxo, $cs_terms));
+			CurrySearchUtils::call_ms(
+				CurrySearchConstants::REGISTER_HIERARCHY_ACTION, $key, array( $taxo, $cs_terms));
 		}
 	}
 
@@ -283,7 +283,7 @@ class CurrySearch {
 		$api_key = CurrySearchUtils::call_ms(CurrySearchConstants::REGISTER_ACTION, NULL, NULL);
 
 		$options = ['api_key' => $api_key];
-		add_option(CurrySearchConstants::APIKEY_OPTION, $options, /*deprecated parameter*/'', /*autoload*/'yes');
+		add_option(CurrySearchConstants::OPTIONS, $options, /*deprecated parameter*/'', /*autoload*/'yes');
 
 		self::full_indexing();
 	}
@@ -294,7 +294,7 @@ class CurrySearch {
      * Tell backend that we where deactivated, remove api-key from options!
 	 */
 	static function uninstall() {
-		delete_option(CurrySearchConstants::APIKEY_OPTION);
+		delete_option(CurrySearchConstants::OPTIONS);
 	}
 
 	/**
@@ -309,7 +309,8 @@ class CurrySearch {
 			//Intercept!
 			self::$cs_query =
 					  new CurrySearchQuery(
-						  self::get_apikey(),
+						  CurrySearch::get_apikey(),
+						  CurrySearch::get_port(),
 						  CurrySearchUtils::get_session_hash(),
 						  $query->query['s'],
 						  $query->get('paged'));
@@ -431,11 +432,13 @@ class CurrySearchQuery{
 		$query_args["value"] = $this->query;
 		$query_args["page"] = (int)$this->page;
 		$query_args["page_size"] = (int)get_option('posts_per_page');
+		error_log($this->port);
 
 		// Start the request
-		$response =	CurrySearchUtils::as_call(
-				CurrySearchConstants::SEARCH_ACTION, $this->api_key, $this->port, $this->hash, $query_args);
+		$response =	CurrySearchUtils::call_as(
+				CurrySearchConstants::SEARCH_ACTION, $this->port, $this->api_key, $this->hash, $query_args);
 
+		error_log( print_r( $response, true ) );
 		// Parse the response
 		$decoded = json_decode($response, true);
 		$this->query_result = $decoded['posts'];

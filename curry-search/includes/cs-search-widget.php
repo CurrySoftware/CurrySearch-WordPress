@@ -38,6 +38,9 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 		 * Also, we add an extra field so that we can distinguish between CurrySearch and non-CurrySearch requests.
 		 */
 
+		//TODO: This has a bug with doubled value field:
+		// <input autocomplete="off" value="" id="curry-search-input" type="search" class="search-field" placeholder="Search &hellip;" value="" name="s" />
+		$form = "";
 		if (false === ($form === get_transient(CurrySearchConstants::SEARCHFORMTRANSIENT))) {
 
 			$form = get_search_form(false);
@@ -68,8 +71,6 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 				$form = '<input value"'.get_search_query().'" id="curry-search-input_blank" autocomplete="off" type="search" />';
 				$id = "curry-search-input_blank";
 			}
-			echo $form;
-
 			// Keep it for one hour
 			set_transient(CurrySearchConstants::SEARCHFORMTRANSIENT, $form, 3600);
 		}
@@ -81,7 +82,7 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 
 		$session_hash = CurrySearchUtils::get_session_hash();
 		$public_api_key = CurrySearch::get_public_api_key();
-		$url = CurrySearchConstants::QAC_URL;
+		$url = CurrySearchConstants::APPLICATION_URL.":".CurrySearch::get_port()."/".CurrySearchConstants::QAC_ACTION;
 		$input_id = $id;
 
 		// js thats hooks up the elm code

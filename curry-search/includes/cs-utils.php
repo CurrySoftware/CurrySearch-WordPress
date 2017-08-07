@@ -20,17 +20,14 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  */
 class CurrySearchUtils{
 
-	const MANAGEMENT_URL = "https://ms-curry-test/";
-	const APPLICATION_URL = "https://ms-curry-test";
-
 	static $curl_handle = NULL;
 
 	static function call_as($action, $port, $api_key, $session_hash, $payload) {
-		return call(CurrySearchUtils::APPLICATION_URL.":".$port."/".$action, $api_key, $session_hash, $payload);
+		return CurrySearchUtils::call(CurrySearchConstants::APPLICATION_URL.":".$port."/".$action, $api_key, $session_hash, $payload);
 	}
 
 	static function call_ms($action, $api_key, $payload) {
-		return call(CurrySearchUtils::MANAGEMENT_URL.$action, $api_key, NULL, $payload);
+		return CurrySearchUtils::call(CurrySearchConstants::MANAGEMENT_URL.$action, $api_key, NULL, $payload);
 	}
 
 	private static function api_admin_warn() {
@@ -42,7 +39,7 @@ class CurrySearchUtils{
 	}
 
 	private static function call($url, $api_key, $session_hash, $payload) {
-		if (curl_installed()) {
+		if (CurrySearchUtils::curl_installed()) {
 
 			if (!isset(CurrySearchUtils::$curl_handle)) {
 				CurrySearchUtils::$curl_handle = curl_init();
@@ -75,17 +72,43 @@ class CurrySearchUtils{
 				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 			}
 
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 			curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 
 			$response = curl_exec($ch);
 			$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 			if ($http_status != 200) {
+				error_log("AHA!");
+				error_log( print_r( curl_getinfo($ch), true ) );
+
 				add_action( 'admin_notices', array('CurrySearchUtils', 'api_admin_warn' ));
 			}
 			curl_close($ch);
-			return $reponse;
+			return $response;
 		}
+	}
+
+	/**
+	 * We do not care about users or ips. This is private data.
+	 * But for meaningful statitics we need a way to differentiate between different search session
+	 * For this we hash together the users ip, their user agent and the current date.
+	 *
+	 * This hash acts as an pseudonymous identifying function.
+	 * We can not see who or what access your site but we can see wich search request are
+	 * made by the same device on the same day.
+	 *
+	 */
+	static function get_session_hash() {
+		if(isset($_SERVER['REMOTE_ADDR'])) {
+			$ip = $_SERVER['REMOTE_ADDR'];
+		}
+		if(isset($_SERVER['HTTP_USER_AGENT'])) {
+			$ua = $_SERVER['HTTP_USER_AGENT'];
+		}
+		$date = date("omd");
+		$sha = sha1($ip.$ua.$date);
+		return substr($sha, 0, 10);
 	}
 
 	private static function curl_installed(){
