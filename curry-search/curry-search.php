@@ -294,6 +294,11 @@ class CurrySearch {
      * Tell backend that we where deactivated, remove api-key from options!
 	 */
 	static function uninstall() {
+		$port = CurrySearch::get_port();
+		$key = CurrySearch::get_apikey();
+
+		CurrySearchUtils::call_ms(CurrySearchConstants::DEACTIVATE_ACTION."/".$port, $key, NULL);
+
 		delete_option(CurrySearchConstants::OPTIONS);
 	}
 

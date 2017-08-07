@@ -7,6 +7,7 @@ class CurrySearchConstants {
 	const APPLICATION_URL = "https://ms-curry-test";
 
 	const REGISTER_ACTION  = "register";
+	const DEACTIVATE_ACTION = "deactivate";
 	const REGISTER_FIELDS_ACTION = "register_fields";
 	const REGISTER_HIERARCHY_ACTION = "register_hierarchy";
 	const INDEXING_START_ACTION = "full_indexing_start";
