@@ -79,9 +79,6 @@ class CurrySearchUtils{
 			$response = curl_exec($ch);
 			$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 			if ($http_status != 200) {
-				error_log("AHA!");
-				error_log( print_r( curl_getinfo($ch), true ) );
-
 				add_action( 'admin_notices', array('CurrySearchUtils', 'api_admin_warn' ));
 			}
 			curl_close($ch);

@@ -196,7 +196,7 @@ view model =
     if List.isEmpty model.suggestions then
         Html.text ""
     else
-        ul []
+        ul [ class "cs_ac_results" ]
             (List.indexedMap
                 (\index ->
                     \sug ->

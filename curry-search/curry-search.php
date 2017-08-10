@@ -115,7 +115,7 @@ class CurrySearch {
 		wp_register_script("cs-autocomplete.min.js",
 						   plugins_url("public/js/cs-autocomplete.min.js", __FILE__));
 		wp_register_style("currysearch.css",
-						  plugins_url("assets/currysearch.css",  __FILE__));
+						  plugins_url("public/css/currysearch.css",  __FILE__));
 
 		wp_enqueue_script("cs-autocomplete.min.js");
 		wp_enqueue_style("currysearch.css");
@@ -226,6 +226,8 @@ class CurrySearch {
 	 	$port = CurrySearchUtils::call_ms(
 			CurrySearchConstants::INDEXING_DONE_ACTION, $key, array( 'parts' => $part_count ));
 
+		$port = json_decode($port, true);
+
 		$options = ['api_key' => $key, 'port' => $port];
 		update_option(CurrySearchConstants::OPTIONS, $options, /*autoload*/'yes');
 
@@ -281,7 +283,7 @@ class CurrySearch {
 	static function install() {
 		//register index
 		$api_key = CurrySearchUtils::call_ms(CurrySearchConstants::REGISTER_ACTION, NULL, NULL);
-
+		$api_key = json_decode($api_key, true);
 		$options = ['api_key' => $api_key];
 		add_option(CurrySearchConstants::OPTIONS, $options, /*deprecated parameter*/'', /*autoload*/'yes');
 
