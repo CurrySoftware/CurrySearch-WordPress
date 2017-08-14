@@ -13,10 +13,7 @@ import Json.Encode
 
 port suggest_choice : String -> Cmd msg
 
-
 port search_box_input : (String -> msg) -> Sub msg
-
-
 port search_box_arrow : (Int -> msg) -> Sub msg
 
 
@@ -196,14 +193,17 @@ view model =
     if List.isEmpty model.suggestions then
         Html.text ""
     else
-        ul [ class "cs_ac_results" ]
+        div [ class "cs_ac_results"
+           -- , style [ ("height", "90px")
+           --         , ("width", "100px") ]
+           ]
             (List.indexedMap
                 (\index ->
                     \sug ->
                         if index == model.focus - 1 then
-                            li [ class "cs_ac_active" ] [ text sug ]
+                            div [ class "cs_ac_result cs_ac_active" ] [ text sug ]
                         else
-                            li [ onClick (Select (index + 1)) ] [ text sug ]
+                            div [ class "cs_ac_result", onClick (Select (index + 1)) ] [ text sug ]
                 )
                 model.suggestions
             )

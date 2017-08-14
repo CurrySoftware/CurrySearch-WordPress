@@ -1,31 +1,29 @@
 #curry-search-autocomplete {
+    position: relative;
+    min-height: 0px;
+    z-index: 1;
+    margin: 0px;
+    padding: 0px
+}
+
+.cs_ac_results {
+    background-color: #DDD;
     position: absolute;
     width: 100%;
-    min-height: 0px;
-    display: block;
-    z-index: 10;
-}
-
-#curry-search-autocomplete ul {
-    list-style-type: none;
     margin: 0px;
     padding: 0px;
-}
 
-#curry-search-autocomplete li {
-    display: block;
-    cursor: pointer;
-    padding-left: 15px;
-}
-
-#curry-search-autocomplete li:hover {
-    background: #999;
+    .cs_ac_result {
+        display: block;
+        cursor: pointer;
+        padding-left: 15px;
+        
+        &:hover {
+            background: #000;
+        }
+    }
 }
 
 .cs_ac_active {
-    background: #BBB;
-}
-
-.cs_active_filter a{
-    color: #000;
+    background: #000;
 }

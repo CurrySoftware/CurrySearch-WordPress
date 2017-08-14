@@ -1,4 +1,5 @@
-<script>
+    <div id="curry-search-autocomplete"></div>
+    <script>
   function insertAfter(referenceNode, newNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
   }
@@ -10,14 +11,11 @@
   }
 
   var search_field = document.getElementById("<?php echo $input_id?>");
-  var suggest_list = document.createElement("div");
-  suggest_list.setAttribute("id", "curry-search-autocomplete");
 
-  insertAfter(search_field, suggest_list);
-  search_field.setAttribute("style", "position:relative;");
+
+  var suggest_list = document.getElementById("curry-search-autocomplete");
 
   var app = Elm.CurrySearchAutoComplete.embed(suggest_list, flags);
-
 
   search_field.addEventListener("keydown", function(e) {
       if (e.keyCode == '38' ) {
@@ -37,4 +35,5 @@
       search_field.value = term;
       search_field.focus();
   });
+
 </script>
