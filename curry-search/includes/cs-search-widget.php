@@ -112,14 +112,15 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 			$term_ids = array_column($taxo_values, 'term');
 			$wp_terms = array_column(get_terms(array('include' => $term_ids)), 'name', 'term_id');
 
-			echo $args['before_title'] . apply_filters( 'widget_title', $taxo->label  ) . $args['after_title'];
-			echo "<ul>";
+			echo $args['before_title'] .'Filter search results by '. apply_filters( 'widget_title', $taxo->label  ) . $args['after_title'];
+			echo "<ul class='cs_filter_list' style='list-style: none;'>";
 			foreach ($taxo_values as $k=>$v) {
 				if ($v["active"] == true) {
 					global $wp;
 					$current_url = esc_url(remove_query_arg( 'cs_'.$taxo_slug.'_'.$v['term'],
 															 home_url( add_query_arg( null, null )) ));
 					echo "<li class='cs_active_filter'><a href='". $current_url . "'>";
+					echo "<input type='checkbox' checked='true' />";
 					echo $wp_terms[$v['term']];
 					echo "</a></li>";
 				} else {
@@ -127,6 +128,7 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 					$current_url = esc_url(add_query_arg( 'cs_'.$taxo_slug.'_'.$v['term'] , $v['term'],
 														  home_url( add_query_arg( null, null )) ));
 					echo "<li><a href='". $current_url . "'>";
+					echo "<input type='checkbox' />";
 					echo $wp_terms[$v['term']];
 					echo " (".$v['count'].")";
 					echo "</a></li>";

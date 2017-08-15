@@ -17,19 +17,21 @@
   var suggest_rect = suggest_list.getBoundingClientRect();
 
   var height_diff = search_rect.bottom - suggest_rect.top;
-
-  suggest_list.style = "margin-top: " + height_diff+"px;";
+  var neg_height_diff = -height_diff;
+  suggest_list.style = "margin-top: " + height_diff+"px; padding-bottom: " + neg_height_diff+"px;";
 
   var app = Elm.CurrySearchAutoComplete.embed(suggest_list, flags);
 
   search_field.addEventListener("keydown", function(e) {
       if (e.keyCode == '38' ) {
+          //Up Arrow
           app.ports.search_box_arrow.send(-1);
           e.preventDefault();
       } else if (e.keyCode == '40') {
+          //Down arrow
           app.ports.search_box_arrow.send(1);
           e.preventDefault();
-      }
+      };
   });
 
   search_field.addEventListener("input", function(e) {
@@ -40,5 +42,4 @@
       search_field.value = term;
       search_field.focus();
   });
-
 </script>

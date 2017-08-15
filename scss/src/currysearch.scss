@@ -27,3 +27,20 @@
 .cs_ac_active {
     background: #000;
 }
+
+ul.cs_filter_list {
+    padding: 0;
+    margin: 0;
+
+    li {
+        input {
+            vertical-align: middle;
+            margin: 0px;
+            margin-right: 5px;
+        }
+
+        label {
+            vertical-align: middle;
+        }
+    }
+}
