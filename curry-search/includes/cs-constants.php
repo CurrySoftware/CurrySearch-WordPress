@@ -3,8 +3,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class CurrySearchConstants {
 
-	const MANAGEMENT_URL = "https://ms-curry-test/";
-	const APPLICATION_URL = "https://ms-curry-test";
+	const MANAGEMENT_URL = "https://ms.curry-search.com/";
+	const APPLICATION_URL = "https://as.curry-search.com";
 
 	const REGISTER_ACTION  = "register";
 	const DEACTIVATE_ACTION = "deactivate";
