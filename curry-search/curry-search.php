@@ -161,7 +161,7 @@ class CurrySearch {
 				'name' => 'body',
 				'data_type' => 'Text',
 				'field_type' => 'Search',
-				'autocomplete_source' => false
+				'autocomplete_source' => true
 			),
 			array(
 				'name' => 'post_tag',
@@ -202,14 +202,11 @@ class CurrySearch {
 				// Add its title, contents and taxo terms to the processed chunk
 				array_push($posts, array(
 					"id" => $post->ID,
-					//TODO: Check if strip_tags is ok
-					//TODO: Check if html_entity_decode is ok
 					"raw_fields" =>  array (
 						array("title", html_entity_decode( strip_tags( $post->post_title), ENT_QUOTES, "UTF-8")),
+						// We could leave the tags. Then we would have more information during indexing...
 						array("body", html_entity_decode(
 							strip_tags( wp_strip_all_tags( $post->post_content ) ), ENT_QUOTES, "UTF-8" )),
-						//The need of implode for this sucks!
-						//Fix it!
 						array("post_tag", implode(" ", $taxo_terms["post_tag"])),
 						array("category", implode(" ", $taxo_terms["category"]))
 					)
@@ -439,13 +436,11 @@ class CurrySearchQuery{
 		$query_args["value"] = $this->query;
 		$query_args["page"] = (int)$this->page;
 		$query_args["page_size"] = (int)get_option('posts_per_page');
-		error_log($this->port);
 
 		// Start the request
 		$response =	CurrySearchUtils::call_as(
 				CurrySearchConstants::SEARCH_ACTION, $this->port, $this->api_key, $this->hash, $query_args);
 
-		error_log( print_r( $response, true ) );
 		// Parse the response
 		$decoded = json_decode($response, true);
 		$this->query_result = $decoded['posts'];
