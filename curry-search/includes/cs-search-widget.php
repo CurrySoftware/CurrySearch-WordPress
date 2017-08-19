@@ -66,9 +66,11 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 				$input_field =str_replace('<input', '<input autocomplete="off"', $input_field);
 				$form = preg_replace('/<input[^>]*name="s"[^>]*\/>/', $input_field, $form);
 			} else {
-				// We didnt find any search form... this is probably not so good.
+				// We didnt find any search form... this probably means the theme does not have a searchform.
 				// Anyways.. We will just create a blank one
-				$form = '<input value"'.get_search_query().'" id="curry-search-input_blank" autocomplete="off" type="search" />';
+				$form = '<form method="get" action="' . esc_url( home_url( '/' ) ) . '">
+  <input value"'.get_search_query().'" id="curry-search-input_blank" autocomplete="off" type="search" />
+<input value="Search" type="submit"></form>';
 				$id = "curry-search-input_blank";
 			}
 			// Keep it for one hour

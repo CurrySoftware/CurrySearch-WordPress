@@ -45,7 +45,6 @@ add_action("pre_get_posts", array("CurrySearch", "intercept_query"));
 add_action("wp_enqueue_scripts", array("CurrySearch", "enqueue_scripts"));
 add_action("widgets_init", array("CurrySearch", "register_widgets"));
 
-
 /**
  * The central static class in this plugin. All methods are static, nothing is to be instantiated!
  * It's tasks are plugin registration, indexing, keeping the index up to date
