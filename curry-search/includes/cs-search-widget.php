@@ -38,7 +38,7 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 		 * Also, we add an extra field so that we can distinguish between CurrySearch and non-CurrySearch requests.
 		 */
 
-		//TODO: This has a bug with doubled value field:
+		//TODO: This has a bug with doubled value field. Example:
 		// <input autocomplete="off" value="" id="curry-search-input" type="search" class="search-field" placeholder="Search &hellip;" value="" name="s" />
 		$form = "";
 		if (false === ($form === get_transient(CurrySearchConstants::SEARCHFORMTRANSIENT))) {

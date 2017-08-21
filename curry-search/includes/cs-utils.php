@@ -71,7 +71,9 @@ class CurrySearchUtils{
 			} else {
 				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 			}
+			global $wp_version;
 
+			curl_setopt($ch, CURLOPT_USERAGENT, 'Curl/WordPress/'.$wp_version.'; ' . home_url());
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 			curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
@@ -83,6 +85,30 @@ class CurrySearchUtils{
 			}
 			curl_close($ch);
 			return $response;
+		} else {
+
+			$header = array();
+
+			// Use POST if there is a payload and GET otherwise
+			if (isset($payload)) {
+				  $response = wp_remote_post($url, array(
+					  'headers' => array (
+						  'Content-Type' => 'application/json',
+						  'X-CS-ApiKey' => $api_key,
+					  ),
+					  'body' => json_encode($payload)));
+			} else {
+				if (isset($api_key)) {
+				  $response = wp_remote_get($url, array(
+					  'headers' => array(
+						  'X-CS-ApiKey' => $api_key,
+					  )));
+				  } else {
+					$response = wp_remote_get($url);
+				  }
+
+			}
+			return wp_remote_retrieve_body($response);
 		}
 	}
 
