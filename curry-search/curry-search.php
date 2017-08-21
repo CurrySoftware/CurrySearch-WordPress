@@ -6,6 +6,8 @@ Description: Interface to the CurrySearch System. Provides fast and reliable res
 Version:     0.1
 Author:      CurrySoftware GmbH
 Author URI:  https://www.curry-software.com
+Text Domain: curry-search
+Domain Path: /languages
 License:     GPL3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -44,6 +46,8 @@ register_deactivation_hook( __FILE__, array('CurrySearch', 'uninstall' ));
 add_action("pre_get_posts", array("CurrySearch", "intercept_query"));
 add_action("wp_enqueue_scripts", array("CurrySearch", "enqueue_scripts"));
 add_action("widgets_init", array("CurrySearch", "register_widgets"));
+add_action("plugins_loaded", array("CurrySearch", "load_textdomain"));
+
 
 /**
  * The central static class in this plugin. All methods are static, nothing is to be instantiated!
@@ -118,6 +122,10 @@ class CurrySearch {
 
 		wp_enqueue_script("cs-autocomplete.min.js");
 		wp_enqueue_style("currysearch.css");
+	}
+
+	static function load_textdomain() {
+		load_plugin_textdomain("curry-search", false, dirname( plugin_basename( __FILE__ ) ) . '/languages/');
 	}
 
 	/**
