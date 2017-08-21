@@ -38,15 +38,18 @@ include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-constants.php');
 include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-utils.php');
 // And the Sidebar widget
 include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-search-widget.php');
+// And the Admin Page
+include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-admin.php');
+
 
 register_activation_hook(__FILE__, array('CurrySearch', 'install'));
 register_deactivation_hook( __FILE__, array('CurrySearch', 'uninstall' ));
 
 // Hook to intercept queries
-add_action("pre_get_posts", array("CurrySearch", "intercept_query"));
-add_action("wp_enqueue_scripts", array("CurrySearch", "enqueue_scripts"));
-add_action("widgets_init", array("CurrySearch", "register_widgets"));
-add_action("plugins_loaded", array("CurrySearch", "load_textdomain"));
+add_action('pre_get_posts', array('CurrySearch', 'intercept_query'));
+add_action('wp_enqueue_scripts', array('CurrySearch', 'enqueue_scripts'));
+add_action('widgets_init', array('CurrySearch', 'register_widgets'));
+add_action('plugins_loaded', array('CurrySearch', 'load_textdomain'));
 
 
 /**
@@ -68,7 +71,7 @@ class CurrySearch {
 		if (!isset(CurrySearch::$options)) {
 			CurrySearch::$options = get_option(CurrySearchConstants::OPTIONS, $default = false);
 		}
-		$key = CurrySearch::$options["api_key"];
+		$key = CurrySearch::$options['api_key'];
 		return $key;
 	}
 
@@ -83,8 +86,8 @@ class CurrySearch {
 		if (!isset(CurrySearch::$options)) {
 			CurrySearch::$options = get_option(CurrySearchConstants::OPTIONS, $default = false);
 		}
-		if (isset(CurrySearch::$options["port"])) {
-			$port = CurrySearch::$options["port"];
+		if (isset(CurrySearch::$options['port'])) {
+			$port = CurrySearch::$options['port'];
 			return $port;
 		}
 		return null;
@@ -106,7 +109,7 @@ class CurrySearch {
 	 * Currently only the Sidebar Search
 	 */
 	static function register_widgets() {
-		register_widget("CS_SidebarSearch_Widget");
+		register_widget('CS_SidebarSearch_Widget');
 	}
 
 	/**
@@ -115,17 +118,17 @@ class CurrySearch {
 	 * These are mainly for query autocompletion
 	 */
 	static function enqueue_scripts() {
-		wp_register_script("cs-autocomplete.min.js",
-						   plugins_url("public/js/cs-autocomplete.min.js", __FILE__));
+		wp_register_script('cs-autocomplete.min.js',
+						   plugins_url('public/js/cs-autocomplete.min.js', __FILE__));
 		wp_register_style("currysearch.css",
-						  plugins_url("public/css/currysearch.css",  __FILE__));
+						  plugins_url('public/css/currysearch.css',  __FILE__));
 
-		wp_enqueue_script("cs-autocomplete.min.js");
-		wp_enqueue_style("currysearch.css");
+		wp_enqueue_script('cs-autocomplete.min.js');
+		wp_enqueue_style('currysearch.css');
 	}
 
 	static function load_textdomain() {
-		load_plugin_textdomain("curry-search", false, dirname( plugin_basename( __FILE__ ) ) . '/languages/');
+		load_plugin_textdomain('curry-search', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/');
 	}
 
 	/**
@@ -185,8 +188,8 @@ class CurrySearch {
 		);
 
 		// Register categories
-		CurrySearch::register_hierarchy($key, "category");
-		$taxos = array("post_tag", "category");
+		CurrySearch::register_hierarchy($key, 'category');
+		$taxos = array('post_tag', 'category');
 
 		$part_count = 0;
 		//Index posts chunk by chunk
@@ -208,20 +211,20 @@ class CurrySearch {
 
 				// Add its title, contents and taxo terms to the processed chunk
 				array_push($posts, array(
-					"id" => $post->ID,
-					"raw_fields" =>  array (
-						array("title", html_entity_decode( strip_tags( $post->post_title), ENT_QUOTES, "UTF-8")),
+					'id' => $post->ID,
+					'raw_fields' =>  array (
+						array('title', html_entity_decode( strip_tags( $post->post_title), ENT_QUOTES, 'UTF-8')),
 						// We could leave the tags. Then we would have more information during indexing...
-						array("body", html_entity_decode(
-							strip_tags( wp_strip_all_tags( $post->post_content ) ), ENT_QUOTES, "UTF-8" )),
-						array("post_tag", implode(" ", $taxo_terms["post_tag"])),
-						array("category", implode(" ", $taxo_terms["category"]))
+						array('body', html_entity_decode(
+							strip_tags( wp_strip_all_tags( $post->post_content ) ), ENT_QUOTES, 'UTF-8' )),
+						array('post_tag', implode(' ', $taxo_terms['post_tag'])),
+						array('category', implode(' ', $taxo_terms['category']))
 					)
 				));
 			}
 			// Send chunk to the server
 			CurrySearchUtils::call_ms(
-				CurrySearchConstants::INDEXING_PART_ACTION, $key, array("posts" => $posts));
+				CurrySearchConstants::INDEXING_PART_ACTION, $key, array('posts' => $posts));
 			$part_count += 1;
 			$posts = array();
 		}
@@ -234,20 +237,6 @@ class CurrySearch {
 
 		$options = ['api_key' => $key, 'port' => $port];
 		update_option(CurrySearchConstants::OPTIONS, $options, /*autoload*/'yes');
-
-		add_action( 'admin_notices', array('CurrySearch', 'successfull_indexing_notice'));
-	}
-
-
-	/**
-	 * Callback for a successfull indexing
-	 **/
-	static function successfull_indexing_notice() {
-		?>
-		<div class="notice notice-success is-dismissible">
-        	<p>Successfully indexed all your content to the CurrySearch API! You can use the CurrySearch Widget now.</p>
-		</div>
-		<?php
 	}
 
 	/**
@@ -440,9 +429,9 @@ class CurrySearchQuery{
 				}
 			}
 		}
-		$query_args["value"] = $this->query;
-		$query_args["page"] = (int)$this->page;
-		$query_args["page_size"] = (int)get_option('posts_per_page');
+		$query_args['value'] = $this->query;
+		$query_args['page'] = (int)$this->page;
+		$query_args['page_size'] = (int)get_option('posts_per_page');
 
 		// Start the request
 		$response =	CurrySearchUtils::call_as(

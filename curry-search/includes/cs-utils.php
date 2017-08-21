@@ -96,13 +96,16 @@ class CurrySearchUtils{
 						  'Content-Type' => 'application/json',
 						  'X-CS-ApiKey' => $api_key,
 					  ),
+					  'timeout' => 30,
 					  'body' => json_encode($payload)));
 			} else {
 				if (isset($api_key)) {
 				  $response = wp_remote_get($url, array(
 					  'headers' => array(
 						  'X-CS-ApiKey' => $api_key,
-					  )));
+					  ),
+					  'timeout' => 30,
+				  ));
 				  } else {
 					$response = wp_remote_get($url);
 				  }

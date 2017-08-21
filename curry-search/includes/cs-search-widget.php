@@ -17,10 +17,7 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 	/**
 	 * Front-end display of widget.
 	 *
-	 * @see WP_Widget::widget()
-	 *
-	 * @param array $args     Widget arguments.
-	 * @param array $instance Saved values from database.
+	 * In our case: A searchform with javascript hook + possible tag filters
 	 */
 	public function widget( $args, $instance ) {
 
@@ -55,7 +52,7 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 				} else {
 					//There is no id. We have to set our own
 					$input_field =str_replace('<input', '<input id="curry-search-input"', $input_field);
-					$id = "curry-search-input";
+					$id = 'curry-search-input';
 				}
 				// Check if value is set
 				if (!strpos('value="', $input_field)) {
@@ -71,7 +68,7 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 				$form = '<form method="get" action="' . esc_url( home_url( '/' ) ) . '">
   <input value"'.get_search_query().'" id="curry-search-input_blank" autocomplete="off" type="search" />
   <input value="'.esc_html__("Search", "curry-search").'" type="submit"></form>';
-				$id = "curry-search-input_blank";
+				$id = 'curry-search-input_blank';
 			}
 			// Keep it for one hour
 			set_transient(CurrySearchConstants::SEARCHFORMTRANSIENT, $form, 3600);
@@ -84,11 +81,11 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 
 		$session_hash = CurrySearchUtils::get_session_hash();
 		$public_api_key = CurrySearch::get_public_api_key();
-		$url = CurrySearchConstants::APPLICATION_URL.":".CurrySearch::get_port()."/".CurrySearchConstants::QAC_ACTION;
+		$url = CurrySearchConstants::APPLICATION_URL.':'.CurrySearch::get_port().'/'.CurrySearchConstants::QAC_ACTION;
 		$input_id = $id;
 
 		// js thats hooks up the elm code
-		include_once(CURRYSEARCH_PLUGIN_PATH."public/html/elm-hook.html");
+		include_once(CURRYSEARCH_PLUGIN_PATH.'public/html/elm-hook.html');
 
 		// If we have an active query and filter results
 		// Render these
