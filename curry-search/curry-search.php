@@ -2,7 +2,7 @@
 /*
 Plugin Name: CurrySearch Official
 Plugin URI:  https://wp.curry-search.com
-Description: Interface to the CurrySearch System. Provides fast and reliable results with category and tag filters.
+Description: BETA! Interface to the CurrySearch System. Provides fast and reliable results with autocompletion and tag filters.
 Version:     0.1
 Author:      CurrySoftware GmbH
 Author URI:  https://www.curry-software.com
@@ -38,8 +38,6 @@ include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-constants.php');
 include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-utils.php');
 // And the Sidebar widget
 include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-search-widget.php');
-// And the Admin Page
-include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-admin.php');
 
 
 register_activation_hook(__FILE__, array('CurrySearch', 'install'));
