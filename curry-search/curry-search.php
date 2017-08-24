@@ -38,6 +38,8 @@ include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-constants.php');
 include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-utils.php');
 // And the Sidebar widget
 include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-search-widget.php');
+// And the Admin Page
+include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-admin.php');
 
 
 register_activation_hook(__FILE__, array('CurrySearch', 'install'));
@@ -48,7 +50,7 @@ add_action('pre_get_posts', array('CurrySearch', 'intercept_query'));
 add_action('wp_enqueue_scripts', array('CurrySearch', 'enqueue_scripts'));
 add_action('widgets_init', array('CurrySearch', 'register_widgets'));
 add_action('plugins_loaded', array('CurrySearch', 'load_textdomain'));
-
+add_action('admin_menu', array('CurrySearch', 'init_menu'));
 
 /**
  * The central static class in this plugin. All methods are static, nothing is to be instantiated!
@@ -63,14 +65,20 @@ class CurrySearch {
 	static $options;
 
 	/**
-     * Gets the api_key of the current wordpress installation.
+	 * Abstracts away the loading of options
 	 */
-	static function get_apikey() {
+	static function options() {
 		if (!isset(CurrySearch::$options)) {
 			CurrySearch::$options = get_option(CurrySearchConstants::OPTIONS, $default = false);
 		}
-		$key = CurrySearch::$options['api_key'];
-		return $key;
+		return CurrySearch::$options;
+	}
+
+	/**
+     * Gets the api_key of the current wordpress installation.
+	 */
+	static function get_apikey() {
+		return CurrySearch::options()['api_key'];
 	}
 
 	/**
@@ -81,14 +89,7 @@ class CurrySearch {
 	 * A nonexisten port indicates an unsuccessfull indexing process
 	 */
 	static function get_port() {
-		if (!isset(CurrySearch::$options)) {
-			CurrySearch::$options = get_option(CurrySearchConstants::OPTIONS, $default = false);
-		}
-		if (isset(CurrySearch::$options['port'])) {
-			$port = CurrySearch::$options['port'];
-			return $port;
-		}
-		return null;
+		return CurrySearch::options()['port'];
 	}
 
 	/**
@@ -102,12 +103,58 @@ class CurrySearch {
 	}
 
 	/**
+	 * Time of last successfull indexing as determined by the CurrySearch System
+	 */
+	static function get_last_indexing() {
+		return CurrySearch::options()['last_indexing'];
+	}
+
+	/**
+	 * Language of the content as detected by the CurrySearch System
+	 */
+	static function get_detected_language() {
+		return CurrySearch::options()['detected_language'];
+	}
+
+	/**
+	 * Number of indexed documents as determined by the CurrySearch System
+	 */
+	static function get_indexed_documents() {
+		return CurrySearch::options()['document_count'];
+	}
+
+	/**
 	 * Registers all necessary widgets
 	 *
 	 * Currently only the Sidebar Search
 	 */
 	static function register_widgets() {
 		register_widget('CS_SidebarSearch_Widget');
+	}
+
+	/**
+	 * Registers the menu
+	 */
+	static function init_menu() {
+		new CurrySearchAdminPage();
+	}
+
+	/**
+	 *
+	 */
+	static function get_status() {
+		$status = json_decode(CurrySearchUtils::call_ms(
+			CurrySearchConstants::STATUS_ACTION, CurrySearch::get_apikey(), NULL));
+		$options = CurrySearch::options();
+		error_log(print_r($status, true));
+		error_log(print_r($options, true));
+		$options['detected_language'] = $status->detected_language;
+		$options['document_count'] = $status->document_count;
+		$date = new DateTime();
+		$options['last_indexing'] = $date->setTimestamp($status->last_indexing->secs_since_epoch);
+		error_log(print_r($options, true));
+		CurrySearch::$options = $options;
+		update_option(CurrySearchConstants::OPTIONS, $options, /*autoload*/'yes');
 	}
 
 	/**

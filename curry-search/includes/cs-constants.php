@@ -8,6 +8,7 @@ class CurrySearchConstants {
 
 	const REGISTER_ACTION  = "register";
 	const DEACTIVATE_ACTION = "deactivate";
+	const STATUS_ACTION = "tenant_status";
 	const REGISTER_FIELDS_ACTION = "register_fields";
 	const REGISTER_HIERARCHY_ACTION = "register_hierarchy";
 	const INDEXING_START_ACTION = "full_indexing_start";
