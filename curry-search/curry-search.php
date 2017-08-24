@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: CurrySearch
-Plugin URI:  https://wp.curry-search.com
+Plugin URI:  https://github.com/CurrySoftware/CurrySearch-WordPress
 Description: BETA! Interface to the CurrySearch System. Provides fast and reliable results with autocompletion and tag filters.
 Version:     0.1
 Author:      CurrySoftware GmbH
