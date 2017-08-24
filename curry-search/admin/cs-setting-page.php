@@ -30,9 +30,6 @@ if (null !== CurrySearch::get_port()) {
   ?>
 </form>
 
-<!-- TODO: Reindex -->
-<!-- TODO: Change Language -->
-
 <hr>
 <h2><?php echo esc_html__('Support', 'curry-search') ?></h2>
 <p><?php echo esc_html__('This plugin is currently in a beta phase. If you find an issue or have an idea of how to improve please let us know. Thank you!', 'curry-search') ?></p>

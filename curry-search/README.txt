@@ -19,9 +19,9 @@ This plugin will provides following functionalities:
 * Filtering searchresults by tags
 
 It tries to blend in into your theme by reusing its search form.
-As the computational heavy work of this plugin is done on the servers in the CurrySearch System, it is also very lightweight.
+As the computationaly heavy work of this plugin is done on the servers in the CurrySearch System, it is also very lightweight.
 
-Following languages are supportet:
+Following languages are supported:
 
 * Arabic
 * Danish
