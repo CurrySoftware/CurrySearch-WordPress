@@ -7,7 +7,7 @@
 }
 
 .cs_ac_results {
-    background-color: #DDD;
+    background-color: #FFF;
     position: absolute;
     width: 100%;
     margin: 0px;
@@ -16,16 +16,17 @@
     .cs_ac_result {
         display: block;
         cursor: pointer;
+        padding: 5px;
         padding-left: 15px;
 
         &:hover {
-            background: #000;
+            background: #DDD;
         }
     }
 }
 
 .cs_ac_active {
-    background: #000;
+    background: #DDD;
 }
 
 ul.cs_filter_list {
