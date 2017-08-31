@@ -3,11 +3,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: CurrySearch v0.1.0\n"
+"Project-Id-Version: CurrySearch v1.0.0\n"
 "Report-Msgid-Bugs-To: CurrySoftware GmbH <translation@curry-software."
 "com>\n"
-"POT-Creation-Date: 2017-08-21 15:35+0200\n"
-"PO-Revision-Date: 2017-08-21 15:46+0200\n"
+"POT-Creation-Date: 2017-08-25 00:36+0200\n"
+"PO-Revision-Date: 2017-08-25 00:40+0200\n"
 "Last-Translator: CurrySoftware GmbH <info@curry-software.com>\n"
 "Language-Team: English <>\n"
 "Language: de\n"
@@ -18,12 +18,76 @@ msgstr ""
 "X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;"
-"_nx_noop:4c,1,2;_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;"
-"__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
+"_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,"
+"_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Generator: Poedit 2.0.3\n"
 "X-Poedit-SearchPath-0: .\n"
+
+#: admin/cs-setting-page.php:2
+msgid "CurrySearch Settings and Statistics"
+msgstr "CurrySearch Einstellungen und Statistiken"
+
+#: admin/cs-setting-page.php:6
+msgid "Status: Everything Ok!"
+msgstr "Status: Alles Ok!"
+
+#: admin/cs-setting-page.php:11
+#, php-format
+msgid "Time of Last Indexing: %s"
+msgstr "Letzte Indizierung: %s"
+
+#: admin/cs-setting-page.php:12
+#, php-format
+msgid "Detected Language: %s"
+msgstr "Automatisch erkannte Sprache: %s"
+
+#: admin/cs-setting-page.php:13
+#, php-format
+msgid "Number of indexed documents: %s"
+msgstr "Anzahl indizierter Dokumente: %s"
+
+#: admin/cs-setting-page.php:17
+msgid "Reindexing Needed!"
+msgstr "Erneute Indizierung notwendig!"
+
+#: admin/cs-setting-page.php:23
+msgid "Actions"
+msgstr "Aktionen"
+
+#: admin/cs-setting-page.php:29
+msgid "Re-Index all Documents"
+msgstr "Alle Dokumente erneut indizieren"
+
+#: admin/cs-setting-page.php:34
+msgid "Support"
+msgstr "Support"
+
+#: admin/cs-setting-page.php:35
+msgid ""
+"This plugin is currently in a beta phase. If you find an issue or have an "
+"idea of how to improve please let us know. Thank you!"
+msgstr ""
+"Dieses Plugin ist zurzeit in einer Beta Phase. Sie haben ein Problem oder "
+"einen Verbesserungsvorschlag? Wie würden uns über Ihr Feedback freuen!"
+
+#: admin/cs-setting-page.php:36
+msgid "Report Issue on GitHub"
+msgstr "Problem bei GitHub melden"
+
+#: admin/cs-setting-page.php:37
+msgid "Report Issue by E-Mail"
+msgstr "Problem per E-Mail melden"
+
+#: includes/cs-admin.php:7
+#| msgid "Search"
+msgid "CurrySearch"
+msgstr "CurrySearch"
+
+#: includes/cs-admin.php:16
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
 
 #: includes/cs-search-widget.php:12
 msgid "CurrySearch Sidebar Widget"
@@ -33,15 +97,15 @@ msgstr "CurrySearch Widget"
 msgid "Displays the CurrySearch Searchbox"
 msgstr "Der CurrySearch Suchschlitz mit Filtern und Autovervollständigung"
 
-#: includes/cs-search-widget.php:73
+#: includes/cs-search-widget.php:70
 msgid "Search"
 msgstr "Suche"
 
-#: includes/cs-search-widget.php:117
+#: includes/cs-search-widget.php:114
 #, php-format
 msgid "Filter search results by %s"
 msgstr "Suchergebnisse nach %s filtern"
 
-#: includes/cs-search-widget.php:155
+#: includes/cs-search-widget.php:152
 msgid "Title:"
 msgstr "Titel:"

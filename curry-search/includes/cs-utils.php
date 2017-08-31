@@ -52,6 +52,7 @@ class CurrySearchUtils{
 			$header = array(
 				'Connection: keep-alive',
 				'Keep-Alive: 300',
+				'X-CS-Plugin: WP1.0',
 			);
 
 			if (isset($api_key)) {
@@ -95,6 +96,7 @@ class CurrySearchUtils{
 					  'headers' => array (
 						  'Content-Type' => 'application/json',
 						  'X-CS-ApiKey' => $api_key,
+						  'X-CS-Plugin' => 'WP1.0',
 					  ),
 					  'timeout' => 30,
 					  'body' => json_encode($payload)));
@@ -103,6 +105,7 @@ class CurrySearchUtils{
 				  $response = wp_remote_get($url, array(
 					  'headers' => array(
 						  'X-CS-ApiKey' => $api_key,
+						  'X-CS-Plugin' => ' WP1.0',
 					  ),
 					  'timeout' => 30,
 				  ));
