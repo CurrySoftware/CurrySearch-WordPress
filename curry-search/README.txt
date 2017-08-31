@@ -1,6 +1,6 @@
 === CurrySearch ===
 Contributors: currysoftware
-Tags: search, filter, taxonomy, autocomplete
+Tags: advanced search, search, filter, taxonomy, autocomplete
 Requires at least: 4.0
 Stable tag: trunk
 Tested up to: 4.8
