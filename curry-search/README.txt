@@ -4,7 +4,6 @@ Tags: advanced search, search, filter, taxonomy, autocomplete
 Requires at least: 4.0
 Stable tag: trunk
 Tested up to: 4.8
-Requires PHP: 5.2
 License: GPL3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -70,7 +69,17 @@ Following languages are supported:
 1. Activate the plugin
 2. Place the CurrySearch Sidebar Widget on your Site
 
+== Screenshots ==
+
+1. Filtering search results by tags with resulting post count
+2. Relevance sorted search results
+3. Errortolerant-Autocompletion
+4. CurrySearch Settings and Statistics Page showing info and allowing reindexing
+
 == Changelog ==
+
+= 1.0.1 =
+added screenshots
 
 = 1.0 =
 First Stable Release.

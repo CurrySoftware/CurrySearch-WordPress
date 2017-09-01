@@ -21,6 +21,8 @@ class CurrySearchConstants {
 	const SEARCHFORMTRANSIENT = "currysearch_searchform";
 
 	const OPTIONS  = "currysearch_options";
+	const API_VERSION = "WP1.0.1";
+
 }
 
 ?>
