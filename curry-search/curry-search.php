@@ -146,13 +146,10 @@ class CurrySearch {
 		$status = json_decode(CurrySearchUtils::call_ms(
 			CurrySearchConstants::STATUS_ACTION, CurrySearch::get_apikey(), NULL));
 		$options = CurrySearch::options();
-		error_log(print_r($status, true));
-		error_log(print_r($options, true));
 		$options['detected_language'] = $status->detected_language;
 		$options['document_count'] = $status->document_count;
 		$date = new DateTime();
 		$options['last_indexing'] = $date->setTimestamp($status->last_indexing->secs_since_epoch);
-		error_log(print_r($options, true));
 		CurrySearch::$options = $options;
 		update_option(CurrySearchConstants::OPTIONS, $options, /*autoload*/'yes');
 	}
