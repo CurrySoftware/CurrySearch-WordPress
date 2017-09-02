@@ -8,38 +8,38 @@ License: GPL3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
 
-Interface to the CurrySearch System. Provides fast and reliable results with autocompletion and tag filters.
-
+CurrySearch is a advanced cloudbased search for Wordpress. Autocomplete your search queries and filter your search results!
 == Description ==
 
-CurrySearch is a cloud-based on-site search system with focus on performance and relevance with support for 16 languages.
-This plugin will provides following functionalities:
+CurrySearch is a advanced cloudbased search for Wordpress. Autocomplete your search queries and filter your search results!
+
+This advanced search plugin provides following functionality:
 
 * A error-tolerant query-autocompletion
-* Relevance based full-text searching
-* Filtering searchresults by tags
+* Advanced relevance based full-text search
+* Filter for search results
 
-It tries to blend in into your theme by reusing its search form.
-As the computationaly heavy work of this plugin is done on the servers in the CurrySearch System, it is also very lightweight.
+CurrySearch tries to blend in into your theme by reusing its search form.
+As the computationaly heavy work of this plugin is done on the search servers in the CurrySearch System, it is also very lightweight.
 
-= Speedy and Relevant Search Results =
+= Speedy and Advanced Search Results =
 
-Contrary to the built-in search of WordPress CurrySearch lists more relevant results further up in the result list.
-To achieve this, both the content and the structure of your posts are analysed and a ranking formula is devised for every query.
+Contrary to the built-in search of WordPress CurrySearch lists better and more relevant results further up in the result list.
+To achieve this, both the content and the structure of your posts are analysed and an advanced ranking formula is devised for every query.
 
-The CurrySearch System is optimised for speed and thus answers queries in a matter of milliseconds. All computationally expensive operations are executed on our system and thus your WordPress-Site does not need any extra resources.
+The CurrySearch System is optimised for advanced speed and thus answers queries in a matter of milliseconds. All computationally expensive operations are executed on our search system and thus your WordPress-Site does not need any extra resources.
 
-= Error-Tolerant Autocompletion =
+= Error-Tolerant Autocomplete Search Queries =
 
-Another feature not built into WordPress is query-autocompletion. Users know and appreciate that feature from mayor sites, especially when on mobile devices.
+Another feature, not built into WordPress is query autocomple. Users know and appreciate that feature from mayor sites, especially when on mobile devices.
 
-CurrySearch offers a fast and error-tolerant autocompletion.
+CurrySearch offers a fast and error-tolerant autocomplete.
 Your content is fed into the system and it thus allows relevant results.
 
-= Filtering Search Results by Tags =
+= Search Result Filter by Tags =
 
-Another important feature that WordPress does not offer out-of-the-box is the filtering of search results.
-It makes finding desired documents simpler and faster. CurrySearch supports the filtering of results by tags.
+Another important feature that WordPress does not offer out-of-the-box are search result filters.
+It makes finding desired documents simpler and faster. CurrySearch supports the search result filters by tags by using your taxonomies.
 
 The user interface integrates into your theme and is intuitive for the user.
 
@@ -66,14 +66,14 @@ Following languages are supported:
 
 
 == Installation ==
-1. Activate the plugin
+1. Activate the search plugin
 2. Place the CurrySearch Sidebar Widget on your Site
 
 == Screenshots ==
 
-1. Filtering search results by tags with resulting post count
-2. Relevance sorted search results
-3. Errortolerant-Autocompletion
+1. Filter your advanced search results by tag
+2. Advanced relevance sorted search results
+3. Let CurrySearch autocomplete your search query
 4. CurrySearch Settings and Statistics Page showing info and allowing reindexing
 
 == Changelog ==
