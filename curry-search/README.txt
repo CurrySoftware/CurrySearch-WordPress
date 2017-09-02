@@ -1,4 +1,4 @@
-=== CurrySearch ===
+=== CurrySearch - Advanced Search ===
 Contributors: currysoftware
 Tags: advanced search, search, filter, taxonomy, autocomplete
 Requires at least: 4.0
@@ -41,9 +41,9 @@ Your content is fed into the system and it thus allows relevant results.
 Another important feature that WordPress does not offer out-of-the-box are search result filters.
 It makes finding desired documents simpler and faster. CurrySearch supports the search result filters by tags by using your taxonomies.
 
-The user interface integrates into your theme and is intuitive for the user.
+The advanced user-interface integrates into your theme and is intuitive for the user.
 
-= 16 Supported Languages =
+= Advanced Support for 16 Languages =
 
 Following languages are supported:
 
