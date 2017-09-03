@@ -31,6 +31,8 @@
           //Down arrow
           app.ports.search_box_arrow.send(1);
           e.preventDefault();
+      } else {
+          app.ports.search_box_caret.send(search_field.selectionStart);
       };
   });
 

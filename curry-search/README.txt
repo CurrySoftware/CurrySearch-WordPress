@@ -1,28 +1,22 @@
 === CurrySearch - Advanced Search ===
 Contributors: currysoftware
-Tags: advanced search, search, filter, taxonomy, autocomplete
+Tags: advanced search, search, better search, filter, taxonomy, autocomplete
 Requires at least: 4.0
 Stable tag: trunk
 Tested up to: 4.8
 License: GPL3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
+CurrySearch is a advanced cloudbased search for Wordpress. It supports autocomplete, relevance based results and search result filter.
 
-CurrySearch is a advanced cloudbased search for Wordpress. Autocomplete your search queries and filter your search results!
 == Description ==
 
-CurrySearch is a advanced cloudbased search for Wordpress. Autocomplete your search queries and filter your search results!
-
-This advanced search plugin provides following functionality:
-
-* A error-tolerant query-autocompletion
-* Advanced relevance based full-text search
-* Filter for search results
+CurrySearch is a advanced cloudbased search for Wordpress. It supports autocomplete, relevance based results and search result filter.
 
 CurrySearch tries to blend in into your theme by reusing its search form.
 As the computationaly heavy work of this plugin is done on the search servers in the CurrySearch System, it is also very lightweight.
 
-= Speedy and Advanced Search Results =
+= Speedy and Relevant Search Results =
 
 Contrary to the built-in search of WordPress CurrySearch lists better and more relevant results further up in the result list.
 To achieve this, both the content and the structure of your posts are analysed and an advanced ranking formula is devised for every query.
@@ -41,9 +35,9 @@ Your content is fed into the system and it thus allows relevant results.
 Another important feature that WordPress does not offer out-of-the-box are search result filters.
 It makes finding desired documents simpler and faster. CurrySearch supports the search result filters by tags by using your taxonomies.
 
-The advanced user-interface integrates into your theme and is intuitive for the user.
+The user-interface integrates into your theme and is intuitive for the user.
 
-= Advanced Support for 16 Languages =
+= Support for 16 Languages =
 
 Following languages are supported:
 
@@ -69,6 +63,28 @@ Following languages are supported:
 1. Activate the search plugin
 2. Place the CurrySearch Sidebar Widget on your Site
 
+== Frequently Asked Questions ==
+
+= Is CurrySearch going to slow down my site? =
+
+No. Evaluation and ranking of the search results is done on our servers. Your site mearly fetches a list of relevant post-ids per search query.
+
+= I published a new post. But CurrySearch does not find it yet! =
+
+For now, you will have to manually re-index for every change of content.
+Go to Settings -> CurrySearch for that.
+
+This will be improved in future versions.
+
+= Something is not working as expected! =
+
+Please contact us or create an issue on the [CurrySearch GitHub Repository](https://github.com/CurrySoftware/CurrySearch-WordPress). We will be happy to help you!
+
+= How long does CurrySearch take to index my content? =
+
+If you have fewer than 1000 posts: in a matter of seconds.
+If you have fewer than 10000 posts: in a matter of minutes.
+
 == Screenshots ==
 
 1. Filter your advanced search results by tag
@@ -77,6 +93,9 @@ Following languages are supported:
 4. CurrySearch Settings and Statistics Page showing info and allowing reindexing
 
 == Changelog ==
+
+= 1.0.2 =
+Support for multi-term autocompletion
 
 = 1.0.1 =
 added screenshots

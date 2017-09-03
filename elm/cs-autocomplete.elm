@@ -13,6 +13,7 @@ import Json.Encode
 
 port suggest_choice : String -> Cmd msg
 
+port search_box_caret : (Int -> msg) -> Sub msg
 port search_box_input : (String -> msg) -> Sub msg
 port search_box_arrow : (Int -> msg) -> Sub msg
 
@@ -26,6 +27,7 @@ subscriptions model =
     Sub.batch
         [ search_box_input SetQuery
         , search_box_arrow ArrowKey
+        , search_box_caret SetCaret
         ]
 
 
@@ -61,6 +63,7 @@ type alias Model =
     , query : String
     , suggestions : List String
     , queuedChanges : Int
+    , caretPos : Int
     }
 
 
@@ -77,6 +80,7 @@ init flags =
       , query = ""
       , suggestions = []
       , queuedChanges = 0
+      , caretPos = 0
       }
     , Cmd.none
     )
@@ -99,7 +103,7 @@ getSuggestions model =
         request =
             Json.Encode.object
                 [ ( "query", Json.Encode.string model.query )
-                , ( "caret_pos", Json.Encode.int 0 )
+                , ( "caret_pos", Json.Encode.int model.caretPos )
                 ]
     in
         Http.send NewSuggestions (Http.request
@@ -125,7 +129,7 @@ type Msg
     | Select Int
     | GetSuggestions
     | NewSuggestions (Result Http.Error (List String))
-
+    | SetCaret Int
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -135,6 +139,9 @@ update msg model =
             , Process.sleep (100 * Time.millisecond)
                 |> Task.perform (\_ -> GetSuggestions)
             )
+
+        SetCaret newCaretPos ->
+            ( { model | caretPos = newCaretPos } , Cmd.none )
 
         GetSuggestions ->
             if model.queuedChanges == 1 then
