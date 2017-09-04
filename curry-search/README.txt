@@ -7,11 +7,17 @@ Tested up to: 4.8
 License: GPL3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
-CurrySearch is a advanced cloudbased search for Wordpress. It supports autocomplete, relevance based results and search result filter.
+CurrySearch is a advanced cloudbased search for Wordpress. It supports autocomplete, relevance based search results and search result filter.
 
 == Description ==
 
-CurrySearch is a advanced cloudbased search for Wordpress. It supports autocomplete, relevance based results and search result filter.
+CurrySearch is a advanced cloudbased search for Wordpress. It supports autocomplete, relevance based search results and search result filter.
+
+This advanced search plugin provides following functionality:
+
+* A error-tolerant query-autocompletion
+* Advanced relevance based full-text search
+* Filter for search results
 
 CurrySearch tries to blend in into your theme by reusing its search form.
 As the computationaly heavy work of this plugin is done on the search servers in the CurrySearch System, it is also very lightweight.

@@ -23,6 +23,11 @@ class CurrySearchConstants {
 	const OPTIONS  = "currysearch_options";
 	const API_VERSION = "WP1.0.1";
 
+	//SETTINGS
+	const SETTINGS = "currysearch_settings";
+	const SETTINGS_GROUP = 'cs_settings_group';
+	const SETTINGS_INDEXING_SECTION = 'cs_settings_indexing_section';
+	const SETTINGS_POST_TYPE_FIELD = 'cs_settings_post_type';
 }
 
 ?>

@@ -2,7 +2,7 @@
 /*
 Plugin Name: CurrySearch - Advanced Search
 Plugin URI:  https://github.com/CurrySoftware/CurrySearch-WordPress
-Description: CurrySearch is a advanced cloudbased search for Wordpress. It supports autocomplete, relevance based results and search result filter.
+Description: CurrySearch is a advanced cloudbased search for Wordpress. It supports autocomplete, relevance based search results and search result filter.
 Version:     1.0.2
 Author:      CurrySoftware GmbH
 Author URI:  https://www.curry-software.com
@@ -183,9 +183,14 @@ class CurrySearch {
 		//Get ApiKey from options
 		$key = CurrySearch::get_apikey();
 
+		$settings = get_option(CurrySearchConstants::SETTINGS);
+		$post_types = $settings['indexing_post_types'];
+
 		//Get published posts count
-		$count_posts = wp_count_posts();
-		$published_posts = (int)$count_posts->publish;
+		$published_posts = 0;
+		foreach($post_types as $post_type) {
+			$published_posts += (int)wp_count_posts($post_type)->publish;
+		}
 
 		//Initiate indexing
 		CurrySearchUtils::call_ms(
@@ -194,7 +199,8 @@ class CurrySearch {
 		//Get all posts
 		//https://codex.wordpress.org/Template_Tags/get_posts
 		$postlist = get_posts(array(
-			'numberposts' => -1
+			'numberposts' => -1,
+			'post_type' => $post_types
 		));
 
 		//Chunk them into parts of 100
@@ -319,8 +325,12 @@ class CurrySearch {
 		//register index
 		$api_key = CurrySearchUtils::call_ms(CurrySearchConstants::REGISTER_ACTION, NULL, NULL);
 		$api_key = json_decode($api_key, true);
+
 		$options = ['api_key' => $api_key];
 		add_option(CurrySearchConstants::OPTIONS, $options, /*deprecated parameter*/'', /*autoload*/'yes');
+
+		$settings = ['indexing_post_types' => array('post', 'page')];
+		add_option(CurrySearchConstants::SETTINGS, $settings, '', 'no');
 
 		self::full_indexing();
 	}

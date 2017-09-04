@@ -19,6 +19,15 @@ if (null !== CurrySearch::get_port()) {
 }?>
 
 <hr>
+<form method='POST' action='options-general.php?page=curry-search'>
+  <?php
+	wp_nonce_field('settings_changed');
+	echo '<input type="hidden" value="true" name="settings_changed" />';
+	do_settings_sections('curry-search');
+  	submit_button(esc_html__('Save Settings', 'curry-search'));
+  ?>
+</form>
+<hr>
 
 <h2><?php echo esc_html__('Actions', 'curry-search') ?></h2>
 <form method="POST" action="options-general.php?page=curry-search">
