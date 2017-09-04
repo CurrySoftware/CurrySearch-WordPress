@@ -2,8 +2,8 @@
 /*
 Plugin Name: CurrySearch - Advanced Search
 Plugin URI:  https://github.com/CurrySoftware/CurrySearch-WordPress
-Description: CurrySearch is a advanced cloudbased search for Wordpress. It supports autocomplete, relevance based search results and search result filter.
-Version:     1.0.2
+Description: CurrySearch is an advanced cloudbased search for Wordpress. It supports custom post types, autocomplete, relevance based results and filter.
+Version:     1.0.3
 Author:      CurrySoftware GmbH
 Author URI:  https://www.curry-software.com
 Text Domain: curry-search

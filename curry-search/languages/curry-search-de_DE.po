@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: CurrySearch v1.0.0\n"
 "Report-Msgid-Bugs-To: CurrySoftware GmbH <translation@curry-software."
 "com>\n"
-"POT-Creation-Date: 2017-08-25 00:36+0200\n"
-"PO-Revision-Date: 2017-08-25 00:40+0200\n"
+"POT-Creation-Date: 2017-09-04 18:23+0200\n"
+"PO-Revision-Date: 2017-09-04 18:24+0200\n"
 "Last-Translator: CurrySoftware GmbH <info@curry-software.com>\n"
 "Language-Team: English <>\n"
 "Language: de\n"
@@ -52,19 +52,23 @@ msgstr "Anzahl indizierter Dokumente: %s"
 msgid "Reindexing Needed!"
 msgstr "Erneute Indizierung notwendig!"
 
-#: admin/cs-setting-page.php:23
+#: admin/cs-setting-page.php:27
+msgid "Save Settings"
+msgstr "Einstellungen Speichern"
+
+#: admin/cs-setting-page.php:32
 msgid "Actions"
 msgstr "Aktionen"
 
-#: admin/cs-setting-page.php:29
+#: admin/cs-setting-page.php:38
 msgid "Re-Index all Documents"
 msgstr "Alle Dokumente erneut indizieren"
 
-#: admin/cs-setting-page.php:34
+#: admin/cs-setting-page.php:43
 msgid "Support"
 msgstr "Support"
 
-#: admin/cs-setting-page.php:35
+#: admin/cs-setting-page.php:44
 msgid ""
 "This plugin is currently in a beta phase. If you find an issue or have an "
 "idea of how to improve please let us know. Thank you!"
@@ -72,22 +76,29 @@ msgstr ""
 "Dieses Plugin ist zurzeit in einer Beta Phase. Sie haben ein Problem oder "
 "einen Verbesserungsvorschlag? Wie würden uns über Ihr Feedback freuen!"
 
-#: admin/cs-setting-page.php:36
+#: admin/cs-setting-page.php:45
 msgid "Report Issue on GitHub"
 msgstr "Problem bei GitHub melden"
 
-#: admin/cs-setting-page.php:37
+#: admin/cs-setting-page.php:46
 msgid "Report Issue by E-Mail"
 msgstr "Problem per E-Mail melden"
 
-#: includes/cs-admin.php:7
-#| msgid "Search"
+#: includes/cs-admin.php:10
 msgid "CurrySearch"
 msgstr "CurrySearch"
 
-#: includes/cs-admin.php:16
+#: includes/cs-admin.php:18
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
+
+#: includes/cs-admin.php:43
+msgid "Indexing Settings"
+msgstr "Indizierungseinstellungen"
+
+#: includes/cs-admin.php:44
+msgid "Searchable Post Types"
+msgstr "Durchsuchbare Post Typen"
 
 #: includes/cs-search-widget.php:12
 msgid "CurrySearch Sidebar Widget"
