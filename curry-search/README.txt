@@ -3,7 +3,7 @@ Contributors: currysoftware
 Tags: advanced search, search, better search, filter, taxonomy, autocomplete
 Requires at least: 4.0
 Stable tag: trunk
-Tested up to: 4.8
+Tested up to: 4.9
 License: GPL3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 Description: CurrySearch is an advanced cloudbased search for Wordpress. It supports custom post types, autocomplete , relevance based results and filter.
