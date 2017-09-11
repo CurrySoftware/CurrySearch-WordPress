@@ -1,7 +1,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: CurrySearch v1.0.0\n"
+"Project-Id-Version: CurrySearch v1.0.3\n"
 "POT-Creation-Date: 2017-08-25 00:36+0200\n"
 "PO-Revision-Date: 2017-08-19 12:03+0200\n"
 "Last-Translator: Jakob Demler <jdemler@curry-software.com>\n"

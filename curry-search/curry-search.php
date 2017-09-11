@@ -1,12 +1,12 @@
 <?php
 /*
-Plugin Name: CurrySearch - Advanced Search
+Plugin Name: CurrySearch - Bessere Suche - Better Search
 Plugin URI:  https://github.com/CurrySoftware/CurrySearch-WordPress
 Description: CurrySearch is an better cloud-based search for WordPress. It supports custom post types, advanced autocomplete, relevance based results and filter.
 Version:     1.0.3
 Author:      CurrySoftware GmbH
 Author URI:  https://www.curry-software.com
-Text Domain: curry-search
+Text Domain: currysearch
 Domain Path: /languages
 License:     GPL3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -170,7 +170,7 @@ class CurrySearch {
 	}
 
 	static function load_textdomain() {
-		load_plugin_textdomain('curry-search', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/');
+		load_plugin_textdomain('currysearch', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/');
 	}
 
 	/**

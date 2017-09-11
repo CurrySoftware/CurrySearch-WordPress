@@ -7,7 +7,7 @@ class CurrySearchAdminPage {
 
 		$this->register_settings();
 
-		add_submenu_page('options-general.php', 'CurrySearch', __('CurrySearch', 'curry-search'), 'manage_options', 'curry-search', array( $this, 'settings_page'));
+		add_submenu_page('options-general.php', 'CurrySearch', __('CurrySearch', 'currysearch'), 'manage_options', 'currysearch', array( $this, 'settings_page'));
 	}
 
 
@@ -40,8 +40,8 @@ class CurrySearchAdminPage {
 
 	function register_settings() {
 		register_setting(CurrySearchConstants::SETTINGS_GROUP, CurrySearchConstants::SETTINGS);
-		add_settings_section(CurrySearchConstants::SETTINGS_INDEXING_SECTION, __('Indexing Settings', 'curry-search'), array($this, 'indexing_settings'), 'curry-search');
-		add_settings_field(CurrySearchConstants::SETTINGS_POST_TYPE_FIELD, __('Searchable Post Types', 'curry-search'), array($this, 'indexing_post_types'), 'curry-search', CurrySearchConstants::SETTINGS_INDEXING_SECTION);
+		add_settings_section(CurrySearchConstants::SETTINGS_INDEXING_SECTION, __('Indexing Settings', 'currysearch'), array($this, 'indexing_settings'), 'currysearch');
+		add_settings_field(CurrySearchConstants::SETTINGS_POST_TYPE_FIELD, __('Searchable Post Types', 'currysearch'), array($this, 'indexing_post_types'), 'currysearch', CurrySearchConstants::SETTINGS_INDEXING_SECTION);
 	}
 
 	function indexing_settings() {

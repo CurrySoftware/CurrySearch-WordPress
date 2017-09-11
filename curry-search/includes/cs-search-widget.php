@@ -9,8 +9,8 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			'cs_searchsidebar_widget', // Base ID
-			esc_html__( 'CurrySearch Sidebar Widget', 'curry-search' ), // Name
-			array( 'description' => __( 'Displays the CurrySearch Searchbox', 'curry-search' ), ) // Args
+			esc_html__( 'CurrySearch Sidebar Widget', 'currysearch' ), // Name
+			array( 'description' => __( 'Displays the CurrySearch Searchbox', 'currysearch' ), ) // Args
 		);
 	}
 
@@ -67,7 +67,7 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 				// Anyways.. We will just create a blank one
 				$form = '<form method="get" action="' . esc_url( home_url( '/' ) ) . '">
   <input value"'.get_search_query().'" id="curry-search-input_blank" autocomplete="off" type="search" />
-  <input value="'.esc_html__("Search", "curry-search").'" type="submit"></form>';
+  <input value="'.esc_html__("Search", "currysearch").'" type="submit"></form>';
 				$id = 'curry-search-input_blank';
 			}
 			// Keep it for one hour
@@ -111,7 +111,7 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 			$term_ids = array_column($taxo_values, 'term');
 			$wp_terms = array_column(get_terms(array('include' => $term_ids)), 'name', 'term_id');
 
-			$title = sprintf(__('Filter search results by %s', 'curry-search'),  $taxo->label);
+			$title = sprintf(__('Filter search results by %s', 'currysearch'),  $taxo->label);
 			echo $args['before_title']. apply_filters('widget_title', $title) .$args['after_title'];
 			echo "<ul class='cs_filter_list' style='list-style: none;'>";
 			foreach ($taxo_values as $k=>$v) {
