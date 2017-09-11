@@ -98,3 +98,20 @@ msgstr ""
 #: includes/cs-search-widget.php:152
 msgid "Title:"
 msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/CurrySoftware/CurrySearch-WordPress"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"CurrySearch is an better cloud-based search for WordPress. It supports custom post types, advanced autocomplete, relevance based results and filter."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "CurrySoftware GmbH"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://www.curry-software.com/"
+msgstr ""
