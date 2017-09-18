@@ -198,10 +198,14 @@ class CurrySearch {
 
 		//Get all posts
 		//https://codex.wordpress.org/Template_Tags/get_posts
-		$postlist = get_posts(array(
-			'numberposts' => -1,
-			'post_type' => $post_types
-		));
+		if (!isset($post_types) || empty($post_types)) {
+			$postlist = array();
+		} else {
+			$postlist = get_posts(array(
+				'numberposts' => -1,
+				'post_type' => $post_types
+			));
+		}
 
 		//Chunk them into parts of 100
 		$post_chunks = array_chunk($postlist, 100);
