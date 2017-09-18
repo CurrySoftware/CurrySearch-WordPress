@@ -109,6 +109,9 @@ Go to Settings -> CurrySearch to do that.
 
 == Changelog ==
 
+= 1.0.4 =
+Fixed bug where indexing would fail if no content types are selected
+
 = 1.0.3 =
 Support for custom post types.
 
