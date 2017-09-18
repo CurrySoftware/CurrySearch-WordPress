@@ -288,6 +288,7 @@ class CurrySearch {
 		$port = json_decode($port, true);
 
 		$options = ['api_key' => $key, 'port' => $port];
+		CurrySearch::$options = $options;
 		update_option(CurrySearchConstants::OPTIONS, $options, /*autoload*/'yes');
 	}
 
