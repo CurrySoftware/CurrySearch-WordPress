@@ -74,7 +74,7 @@ class CurrySearchUtils{
 			}
 			global $wp_version;
 
-			curl_setopt($ch, CURLOPT_USERAGENT, 'Curl/WordPress/'.$wp_version.'; ' . home_url());
+			curl_setopt($ch, CURLOPT_USERAGENT, 'Curl/WordPress/'.$wp_version.'/PHP'.phpversion().'; ' . home_url());
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 			curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
