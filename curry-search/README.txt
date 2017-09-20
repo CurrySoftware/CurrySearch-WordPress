@@ -110,7 +110,7 @@ Go to Settings -> CurrySearch to do that.
 == Changelog ==
 
 = 1.1 =
-Ajusted to API-Changes
+Adjusted to API-Changes
 
 = 1.0.5 =
 Fixed bug that occured when using PHP 7.1
