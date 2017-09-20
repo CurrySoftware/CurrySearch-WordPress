@@ -14,8 +14,10 @@ if (null !== CurrySearch::get_port()) {
 </ul>
 <?php
 } else {
-	echo esc_html__('Reindexing Needed!', 'currysearch');
-	echo '</b></p>';
+	echo esc_html__('Error Occured! Reindexing Needed!', 'currysearch');
+	echo '</b></p><p>';
+	echo esc_html__('If this message still exists after re-indexing, please contact support@curry-software.com!', 'currysearch');
+	echo '</p>';
 }?>
 
 <hr>

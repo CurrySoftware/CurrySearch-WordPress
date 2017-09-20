@@ -45,7 +45,7 @@ class CurrySearchUtils{
 				CurrySearchUtils::$curl_handle = curl_init();
 			}
 
-			$ch = CurrySearchUtils::$curl_handle;
+			$ch = curl_copy_handle(CurrySearchUtils::$curl_handle);
 
 			curl_setopt($ch, CURLOPT_URL, $url);
 

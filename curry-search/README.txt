@@ -1,4 +1,4 @@
-=== CurrySearch - Better Search ===
+=== CurrySearch - Better Search - Bessere Suche ===
 Contributors: currysoftware
 Tags: advanced search, search, better search, filter, taxonomy, autocomplete
 Requires at least: 4.0
@@ -108,6 +108,9 @@ Go to Settings -> CurrySearch to do that.
 5. Select all post types that should be searchable
 
 == Changelog ==
+
+= 1.0.5 =
+Fixed bug that occured when using PHP 7.1
 
 = 1.0.4 =
 Fixed bug where indexing would fail if no content types are selected
