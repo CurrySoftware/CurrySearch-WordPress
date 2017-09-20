@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class CurrySearchConstants {
 
 	const MANAGEMENT_URL = "https://ms.curry-search.com/";
+	// This has no slash at the end because we need to specify the port!
 	const APPLICATION_URL = "https://as.curry-search.com";
 
 	const REGISTER_ACTION  = "register";
@@ -21,7 +22,9 @@ class CurrySearchConstants {
 	const SEARCHFORMTRANSIENT = "currysearch_searchform";
 
 	const OPTIONS  = "currysearch_options";
-	const API_VERSION = "WP1.0.5";
+
+	const API_VERSION = "WP1.1";
+	const MS_API_VERSION = "1";
 
 	//SETTINGS
 	const SETTINGS = "currysearch_settings";

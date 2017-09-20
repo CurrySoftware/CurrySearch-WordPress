@@ -27,7 +27,9 @@ class CurrySearchUtils{
 	}
 
 	static function call_ms($action, $api_key, $payload) {
-		return CurrySearchUtils::call(CurrySearchConstants::MANAGEMENT_URL.$action, $api_key, NULL, $payload);
+		return CurrySearchUtils::call(
+			CurrySearchConstants::MANAGEMENT_URL.CurrySearchConstants::MS_API_VERSION.'/'.$action,
+			$api_key, NULL, $payload);
 	}
 
 	private static function api_admin_warn() {
