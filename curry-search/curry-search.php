@@ -47,10 +47,14 @@ register_deactivation_hook( __FILE__, array('CurrySearch', 'uninstall' ));
 
 // Hook to intercept queries
 add_action('pre_get_posts', array('CurrySearch', 'intercept_query'));
+
 add_action('wp_enqueue_scripts', array('CurrySearch', 'enqueue_scripts'));
 add_action('widgets_init', array('CurrySearch', 'register_widgets'));
 add_action('plugins_loaded', array('CurrySearch', 'load_textdomain'));
 add_action('admin_menu', array('CurrySearch', 'init_menu'));
+
+// Hook for cron
+add_action('currysearch_reindexing', array('CurrySearch', 'reindexing'));
 
 /**
  * The central static class in this plugin. All methods are static, nothing is to be instantiated!
@@ -140,7 +144,7 @@ class CurrySearch {
 	}
 
 	/**
-	 *
+	 * Gets the status from the CurrySearch System
 	 */
 	static function get_status() {
 		$status = json_decode(CurrySearchUtils::call_ms(
@@ -153,6 +157,13 @@ class CurrySearch {
 		CurrySearch::$options = $options;
 		update_option(CurrySearchConstants::OPTIONS, $options, /*autoload*/'yes');
 	}
+
+    /**
+     *
+     */
+    static function reindexing() {
+        CurrySearch::full_indexing();
+    }
 
 	/**
 	 * Register and Enqueue JavaScripts and CSSs
@@ -338,6 +349,11 @@ class CurrySearch {
 		$settings = ['indexing_post_types' => array('post', 'page')];
 		add_option(CurrySearchConstants::SETTINGS, $settings, '', 'no');
 
+        //Add daily cron to reindex
+        if(!wp_next_scheduled('currysearch_reindexing')) {
+            wp_schedule_event(time() + 300, 'daily', 'currysearch_reindexing');
+        }
+
 		self::full_indexing();
 	}
 
@@ -351,6 +367,9 @@ class CurrySearch {
 		$key = CurrySearch::get_apikey();
 
 		CurrySearchUtils::call_ms(CurrySearchConstants::DEACTIVATE_ACTION."/".$port, $key, NULL);
+
+        $timestamp = wp_next_scheduled('currysearch_reindexing');
+        wp_unschedule_event($timestamp, 'currysearch_reindexing');
 
 		delete_option(CurrySearchConstants::OPTIONS);
 	}

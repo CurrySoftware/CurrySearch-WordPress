@@ -8,9 +8,10 @@ if (null !== CurrySearch::get_port()) {
 
 <ul>
 <li>ApiKey: <?php echo CurrySearch::get_public_api_key() ?></li>
-  <li><?php printf(esc_html__('Time of Last Indexing: %s', 'currysearch'), CurrySearch::get_last_indexing()->format('Y-m-d H:i:s')) ?></li>
+      <li><?php printf(esc_html__('Time of Last Indexing: %s', 'currysearch'), CurrySearch::get_last_indexing()->format(__('Y-m-d H:i:s', 'currysearch'))) ?></li>
 <li><?php printf(esc_html__('Detected Language: %s', 'currysearch'), CurrySearch::get_detected_language()) ?></li>
 <li><?php printf(esc_html__('Number of indexed documents: %s', 'currysearch'), CurrySearch::get_indexed_documents()) ?></li>
+      <li><?php printf(esc_html__('Next scheduled reindexing: %s', 'currysearch'), date_i18n( __('Y-m-d H:i:s', 'currysearch'), wp_next_scheduled('currysearch_reindexing'))) ?></li>
 </ul>
 <?php
 } else {
