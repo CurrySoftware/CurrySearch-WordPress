@@ -351,7 +351,7 @@ class CurrySearch {
 
         //Add daily cron to reindex
         if(!wp_next_scheduled('currysearch_reindexing')) {
-            wp_schedule_event(time() + 300, 'daily', 'currysearch_reindexing');
+            wp_schedule_event(time() + 86400, 'daily', 'currysearch_reindexing');
         }
 
 		self::full_indexing();
