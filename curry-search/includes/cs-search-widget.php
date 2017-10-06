@@ -86,6 +86,7 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 
 		// js thats hooks up the elm code
 		include_once(CURRYSEARCH_PLUGIN_PATH.'public/html/elm-hook.html');
+		echo $args['after_widget'];
 
 		// If we have an active query and filter results
 		// Render these
@@ -96,7 +97,7 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 			$this->render_filters($args);
 		}
 
-		echo $args['after_widget'];
+
 	}
 
 
@@ -112,6 +113,7 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 			$wp_terms = array_column(get_terms(array('include' => $term_ids)), 'name', 'term_id');
 
 			$title = sprintf(__('Filter search results by %s', 'currysearch'),  $taxo->label);
+            echo $args['before_widget'];
 			echo $args['before_title']. apply_filters('widget_title', $title) .$args['after_title'];
 			echo "<ul class='cs_filter_list' style='list-style: none;'>";
 			foreach ($taxo_values as $k=>$v) {
@@ -135,6 +137,7 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 				}
 			}
 			echo "</ul>";
+            echo $args['after_widget'];
 		}
 	}
 

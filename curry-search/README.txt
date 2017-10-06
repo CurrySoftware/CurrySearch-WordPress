@@ -109,6 +109,9 @@ Go to Settings -> CurrySearch to do that.
 
 == Changelog ==
 
+= 1.2 =
+Introduced daily reindexing and using autocomplete without using the widget
+
 = 1.1 =
 Adjusted to API-Changes
 

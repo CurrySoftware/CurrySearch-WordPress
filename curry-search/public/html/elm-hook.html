@@ -18,8 +18,7 @@
 
   var height_diff = search_rect.bottom - suggest_rect.top;
   var neg_height_diff = -height_diff;
-  suggest_list.style = "margin-top: " + height_diff+"px; padding-bottom: " + neg_height_diff+"px;";
-
+  suggest_list.style = "margin-top: " + height_diff+"px;";
   var app = Elm.CurrySearchAutoComplete.embed(suggest_list, flags);
 
   search_field.addEventListener("keydown", function(e) {
