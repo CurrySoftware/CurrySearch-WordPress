@@ -110,6 +110,10 @@ class CS_SidebarSearch_Widget extends WP_Widget {
 				continue;
 			}
 			$term_ids = array_column($taxo_values, 'term');
+			if (count($term_ids) == 0) {
+				// Don't echo anything if there is nothing
+				continue;
+			}
 			$wp_terms = array_column(get_terms(array('include' => $term_ids)), 'name', 'term_id');
 
 			$title = sprintf(__('Filter search results by %s', 'currysearch'),  $taxo->label);
