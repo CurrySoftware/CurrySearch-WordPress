@@ -71,7 +71,10 @@ Following languages are supported:
 
 == Installation ==
 1. Activate the search plugin
-2. Place the CurrySearch Sidebar Widget on your Site
+2. Place the CurrySearch Sidebar Widget on your Site if you have a Sidebar
+OR
+3. Call the function "CurrySearchUtils::autocomplete('SEARCH_FIELD_ID')" somewhere in your searchform.php.
+'SEARCH_FIELD_ID' beeing the Id of the input field that needs autocomplete.a
 
 == Frequently Asked Questions ==
 

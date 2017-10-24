@@ -122,11 +122,11 @@ class CurrySearchUtils{
 
 
     /**
-     * Renders some javascript that enables autocompletion by CurrySearch for a certain input field.
+     * Renders some javascript that enables autocomplete by CurrySearch for a certain input field.
      * This field is identified by an id
      * Echoes the resulting html!
      */
-    static function autocompletion($field_id) {
+    static function autocomplete($field_id) {
         $session_hash = CurrySearchUtils::get_session_hash();
 		$public_api_key = CurrySearch::get_public_api_key();
 		$url = CurrySearchConstants::APPLICATION_URL.':'.CurrySearch::get_port().'/'.CurrySearchConstants::QAC_ACTION;
