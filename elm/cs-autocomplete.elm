@@ -200,10 +200,7 @@ view model =
     if List.isEmpty model.suggestions then
         Html.text ""
     else
-        div [ class "cs_ac_results"
-           -- , style [ ("height", "90px")
-           --         , ("width", "100px") ]
-           ]
+        div [ class "cs_ac_results" ]
             (List.indexedMap
                 (\index ->
                     \sug ->

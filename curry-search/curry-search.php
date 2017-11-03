@@ -197,17 +197,6 @@ class CurrySearch {
 		$settings = get_option(CurrySearchConstants::SETTINGS);
 		$post_types = $settings['indexing_post_types'];
 
-		//Get published posts count
-		$published_posts = 0;
-		foreach($post_types as $post_type) {
-			$published_posts += (int)wp_count_posts($post_type)->publish;
-		}
-
-		//Initiate indexing
-		CurrySearchUtils::call_ms(
-			CurrySearchConstants::INDEXING_START_ACTION, $key,
-			array('collection_size' => $published_posts, 'url' => home_url()));
-
 		//Get all posts
 		//https://codex.wordpress.org/Template_Tags/get_posts
 		if (!isset($post_types) || empty($post_types)) {
@@ -215,9 +204,17 @@ class CurrySearch {
 		} else {
 			$postlist = get_posts(array(
 				'numberposts' => -1,
-				'post_type' => $post_types
+				'post_type' => $post_types,
+				'post_status' => 'publish',
 			));
 		}
+
+		$published_posts = count($postlist);
+
+		//Initiate indexing
+		CurrySearchUtils::call_ms(
+			CurrySearchConstants::INDEXING_START_ACTION, $key,
+			array('collection_size' => $published_posts, 'url' => home_url()));
 
 		//Chunk them into parts of 100
 		$post_chunks = array_chunk($postlist, 100);
