@@ -84,10 +84,9 @@ No. Evaluation and ranking of the search results is done on our servers. Your si
 
 = I published a new post. But CurrySearch does not find it yet! =
 
-For now, you will have to manually re-index for every change of content.
-Go to Settings -> CurrySearch for that.
-
-This will be improved in future versions.
+CurrySearch re-indexes your content once a day.
+But you also have the option to manually re-index for every change of content.
+Go to Settings -> CurrySearch to do that that.
 
 = Something is not working as expected! =
 
@@ -111,6 +110,9 @@ Go to Settings -> CurrySearch to do that.
 5. Select all post types that should be searchable
 
 == Changelog ==
+
+= 1.2.2 =
+Fixed bug where in some cases indexing would fail due to inconsistent data
 
 = 1.2 =
 Introduced daily reindexing and using autocomplete without using the widget

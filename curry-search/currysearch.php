@@ -3,7 +3,7 @@
 Plugin Name: CurrySearch - Bessere Suche - Better Search
 Plugin URI:  https://www.curry-software.com/en/curry_search/
 Description: CurrySearch is an better cloud-based search for WordPress. It supports custom post types, advanced autocomplete, relevance based results and filter.
-Version:     1.2.1
+Version:     1.2.2
 Author:      CurrySoftware GmbH
 Author URI:  https://www.curry-software.com/en/
 Text Domain: currysearch
