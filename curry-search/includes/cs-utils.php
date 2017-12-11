@@ -32,6 +32,11 @@ class CurrySearchUtils{
 			$api_key, NULL, $payload);
 	}
 
+	static function call_stats($action, $api_key, $payload) {
+		return CurrySearchUtils::call(
+			CurrySearchConstants::STATS_URL.$action, $api_key, NULL, $payload);
+	}
+
 	private static function api_admin_warn() {
 		?>
 		<div class="notice notice-warn is-dismissible">

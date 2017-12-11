@@ -11,8 +11,10 @@ if (null !== CurrySearch::get_port()) {
       <li><?php printf(esc_html__('Time of Last Indexing: %s', 'currysearch'), CurrySearch::get_last_indexing()->format(__('Y-m-d H:i:s', 'currysearch'))) ?></li>
 <li><?php printf(esc_html__('Detected Language: %s', 'currysearch'), CurrySearch::get_detected_language()) ?></li>
 <li><?php printf(esc_html__('Number of indexed documents: %s', 'currysearch'), CurrySearch::get_indexed_documents()) ?></li>
-      <li><?php printf(esc_html__('Next scheduled reindexing: %s', 'currysearch'), date_i18n( __('Y-m-d H:i:s', 'currysearch'), wp_next_scheduled('currysearch_reindexing'))) ?></li>
+<li><?php printf(esc_html__('Next scheduled reindexing: %s', 'currysearch'), date_i18n( __('Y-m-d H:i:s', 'currysearch'), wp_next_scheduled('currysearch_reindexing'))) ?></li>
+	  <li><b><a target='_blank' href='<?php echo CurrySearch::backend_link() ?>'><?php printf(esc_html__('More statistics on my.curry-search.com', 'currysearch'))?></a></b></li>
 </ul>
+
 <?php
 } else {
 	echo esc_html__('Error Occured! Reindexing Needed!', 'currysearch');

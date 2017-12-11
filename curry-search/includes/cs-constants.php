@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class CurrySearchConstants {
 
 	const MANAGEMENT_URL = "https://ms.curry-search.com/";
+	const STATS_URL = "https://my.curry-search.com/api/";
 	// This has no slash at the end because we need to specify the port!
 	const APPLICATION_URL = "https://as.curry-search.com";
 
@@ -15,6 +16,7 @@ class CurrySearchConstants {
 	const INDEXING_START_ACTION = "full_indexing_start";
 	const INDEXING_PART_ACTION = "full_indexing_part";
 	const INDEXING_DONE_ACTION = "full_indexing_done";
+	const TOKEN_ACTION = "token";
 
 	const SEARCH_ACTION = "search";
 	const QAC_ACTION = "autocomplete";
@@ -23,7 +25,7 @@ class CurrySearchConstants {
 
 	const OPTIONS  = "currysearch_options";
 
-	const API_VERSION = "WP1.2";
+	const API_VERSION = "WP1.3";
 	const MS_API_VERSION = "1";
 
 	//SETTINGS

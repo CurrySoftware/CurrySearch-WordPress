@@ -18,6 +18,7 @@ This advanced search plugin provides following functionality:
 * A error-tolerant query-autocompletion
 * Advanced relevance based full-text search
 * Filter for search results
+* Detailed usage statistics
 
 CurrySearch tries to blend in into your theme by reusing its search form.
 As the computationaly heavy work of this plugin is done on the search servers in the CurrySearch System, it is also very lightweight.
@@ -42,6 +43,10 @@ Another important feature that WordPress does not offer out-of-the-box are searc
 It makes finding desired documents simpler and faster. CurrySearch supports the search result filters by tags by using your taxonomies.
 
 The user-interface integrates into your theme and is intuitive for the user.
+
+= Usage Statistics =
+We provide detailed usage statistics about the search functionality of you site.
+This allows you to see what your users are looking for and react accordingly.
 
 = Custom Post Types =
 You can customize which post types should be indexed and retrievable.
@@ -111,6 +116,9 @@ Go to Settings -> CurrySearch to do that.
 5. Select all post types that should be searchable
 
 == Changelog ==
+
+= 1.3 =
+Introduced statistics at my.curry-search.com
 
 = 1.2.2 =
 Fixed bug where in some cases indexing would fail due to inconsistent data
