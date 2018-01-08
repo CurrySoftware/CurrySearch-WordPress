@@ -108,7 +108,7 @@ getSuggestions model =
     in
         Http.send NewSuggestions (Http.request
                                       { method = "POST"
-                                      , headers = [ Http.header "X-CS-PubApiKey" model.public_api_key
+                                      , headers = [ Http.header "X-CS-PublicApiKey" model.public_api_key
                                                   , Http.header "X-CS-SessionHash" model.session_hash
                                                   ]
                                       , url = model.url

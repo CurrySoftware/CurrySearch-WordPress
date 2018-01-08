@@ -23,7 +23,9 @@ class CurrySearchUtils{
 	static $curl_handle = NULL;
 
 	static function call_as($action, $port, $api_key, $session_hash, $payload) {
-		return CurrySearchUtils::call(CurrySearchConstants::APPLICATION_URL.":".$port."/".$action, $api_key, $session_hash, $payload);
+		return CurrySearchUtils::call(
+			CurrySearchConstants::APPLICATION_URL.":".$port."/".
+			CurrySearchConstants::AS_API_VERSION.'/'.$action, $api_key, $session_hash, $payload);
 	}
 
 	static function call_ms($action, $api_key, $payload) {

@@ -117,6 +117,9 @@ Go to Settings -> CurrySearch to do that.
 
 == Changelog ==
 
+= 1.3.1 =
+Improved search results by also evaluating categories and tags
+
 = 1.3 =
 Introduced statistics at my.curry-search.com
 

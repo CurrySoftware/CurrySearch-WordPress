@@ -27,6 +27,7 @@ class CurrySearchConstants {
 
 	const API_VERSION = "WP1.3";
 	const MS_API_VERSION = "1";
+	const AS_API_VERSION = "1";
 
 	//SETTINGS
 	const SETTINGS = "currysearch_settings";

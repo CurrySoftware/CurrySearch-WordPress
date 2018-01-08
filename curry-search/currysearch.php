@@ -3,7 +3,7 @@
 Plugin Name: CurrySearch - Bessere Suche - Better Search
 Plugin URI:  https://www.curry-software.com/en/curry_search/
 Description: CurrySearch is an better cloud-based search for WordPress. It supports custom post types, advanced autocomplete, relevance based results and filter.
-Version:     1.3
+Version:     1.3.1
 Author:      CurrySoftware GmbH
 Author URI:  https://www.curry-software.com/en/
 Text Domain: currysearch
@@ -255,6 +255,18 @@ class CurrySearch {
 				'data_type' => 'Number',
 				'field_type' => 'HierarchyFilter',
 				'autocomplete_source' => false
+			),
+			array(
+				'name' => 'category_text',
+				'data_type' => 'Text',
+				'field_type' => 'Search',
+				'autocomplete_source' => true
+			),
+			array(
+				'name' => 'post_tag_text',
+				'data_type' => 'Text',
+				'field_type' => 'Search',
+				'autocomplete_source' => true
 			))
 		);
 
@@ -272,10 +284,12 @@ class CurrySearch {
 				// Get all its taxo terms (category and tag)
 				foreach ($taxos as $taxo) {
 					$taxo_terms[$taxo] = array();
+					$taxo_terms[$taxo.'_text'] = array();
 					$wp_terms = get_the_terms( $post->ID, $taxo );
 					if (is_array($wp_terms) && count($wp_terms) > 0 ) {
 						foreach( $wp_terms as $term) {
 							array_push($taxo_terms[$taxo], $term->term_id);
+							array_push($taxo_terms[$taxo.'_text'], $term->name);
 						}
 					}
 				}
@@ -289,7 +303,9 @@ class CurrySearch {
 						array('body', html_entity_decode(
 							strip_tags( wp_strip_all_tags( $post->post_content ) ), ENT_QUOTES, 'UTF-8' )),
 						array('post_tag', implode(' ', $taxo_terms['post_tag'])),
-						array('category', implode(' ', $taxo_terms['category']))
+						array('category', implode(' ', $taxo_terms['category'])),
+						array('category_text', implode(' ', $taxo_terms['category_text'])),
+						array('post_tag_text', implode(' ', $taxo_terms['post_tag_text'])),
 					)
 				));
 			}
