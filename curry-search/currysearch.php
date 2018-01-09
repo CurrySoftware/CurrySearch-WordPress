@@ -36,8 +36,6 @@ define('CURRYSEARCH_PLUGIN_PATH', plugin_dir_path(__FILE__));
 include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-constants.php');
 // And Utils
 include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-utils.php');
-// And the Sidebar widget
-include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-search-widget.php');
 // And the Admin Page
 include_once(CURRYSEARCH_PLUGIN_PATH.'includes/cs-admin.php');
 
@@ -47,9 +45,10 @@ register_deactivation_hook( __FILE__, array('CurrySearch', 'uninstall' ));
 
 // Hook to intercept queries
 add_action('pre_get_posts', array('CurrySearch', 'intercept_query'));
+add_action('get_search_form', array('CurrySearch', 'rewrite_searchform'));
 
+add_action('admin_enqueue_scripts', array('CurrySearch', 'admin_enqueue_scripts' ));
 add_action('wp_enqueue_scripts', array('CurrySearch', 'enqueue_scripts'));
-add_action('widgets_init', array('CurrySearch', 'register_widgets'));
 add_action('plugins_loaded', array('CurrySearch', 'load_textdomain'));
 add_action('admin_menu', array('CurrySearch', 'init_menu'));
 
@@ -84,6 +83,9 @@ class CurrySearch {
 	static function get_apikey() {
 		return CurrySearch::options()['api_key'];
 	}
+
+
+
 
 	/**
 	 * Gets the port to communicate to with the search system.
@@ -125,15 +127,6 @@ class CurrySearch {
 	 */
 	static function get_indexed_documents() {
 		return CurrySearch::options()['document_count'];
-	}
-
-	/**
-	 * Registers all necessary widgets
-	 *
-	 * Currently only the Sidebar Search
-	 */
-	static function register_widgets() {
-		register_widget('CS_SidebarSearch_Widget');
 	}
 
 	/**
@@ -188,6 +181,12 @@ class CurrySearch {
 
 		wp_enqueue_script('cs-autocomplete.min.js');
 		wp_enqueue_style('currysearch.css');
+	}
+
+	static function admin_enqueue_scripts($hook_suffix) {
+		// first check that $hook_suffix is appropriate for your admin page
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script( 'my-script-handle', plugins_url('public/js/cs-colorpicker.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
 	}
 
 	static function load_textdomain() {
@@ -369,7 +368,8 @@ class CurrySearch {
 		$options = ['api_key' => $api_key];
 		add_option(CurrySearchConstants::OPTIONS, $options, /*deprecated parameter*/'', /*autoload*/'yes');
 
-		$settings = ['indexing_post_types' => array('post', 'page')];
+		$settings = ['indexing_post_types' => array('post', 'page'),
+					 'inject_autocomplete' => 'true', 'ac_colors' => ['#000', '#DDD', '#555', '#EEE']];
 		add_option(CurrySearchConstants::SETTINGS, $settings, '', 'no');
 
         //Add daily cron to reindex
@@ -395,6 +395,70 @@ class CurrySearch {
         wp_unschedule_event($timestamp, 'currysearch_reindexing');
 
 		delete_option(CurrySearchConstants::OPTIONS);
+	}
+
+
+	/**
+	 * Hooks into the standard searchform if autocomplete is activated.
+	 * Adds an id to the search field, turns browser based autocomplete off and adds a bit of javascript and style
+	 */
+	static function rewrite_searchform($db_form) {
+		$settings = get_option(CurrySearchConstants::SETTINGS, $default = false);
+		if (!(isset($settings['inject_autocomplete']))) {
+			return $db_form;
+		} else {
+			$form = "";
+			if (false === ($form === get_transient(CurrySearchConstants::SEARCHFORMTRANSIENT))) {
+				$form = $db_form;
+				// Looks for an input field with the name="s" (the WordPress search parameter)
+				if (preg_match('/<input[^>]*name="s"[^>]*\/>/', $form, $matches)) {
+					// We found one
+					$input_field = $matches[0];
+					// Check if id is set in \"
+					if (preg_match('/id="([^"]*)"/', $input_field, $id_matches)) {
+						$id = $id_matches[1].uniqid();
+						$input_field = str_replace('id="'.$id_matches[1].'"', 'id="'.$id.'"', $input_field);
+					//Check if id is set in \'
+					} else if (preg_match("/id='([^']*)'/", $input_field, $id_matches)) {
+						$id = $id_matches[1].uniqid();
+						$input_field = str_replace("id='".$id_matches[1]."'", "id='".$id."'", $input_field);
+					}
+					else {
+						//There is no id. We have to set our own
+						$id = 'curry-search-input'.uniqid();
+						$input_field =str_replace('<input', '<input id="'.$id.'"', $input_field);
+					}
+					// Check if value is set
+					if (!strpos('value="', $input_field)) {
+						// If no value is set, we will set our own to the current query
+						$input_field =str_replace('<input', '<input value="'.get_search_query().'"', $input_field);
+					}
+					// turn browser autocomplete off. We ship our own
+					$input_field =str_replace('<input', '<input autocomplete="off"', $input_field);
+					
+					//Now replace the input field
+					$form = preg_replace('/<input[^>]*name="s"[^>]*\/>/', $input_field, $form);
+				} else {
+					// We didnt find any search form... this probably means the theme does not have a searchform.
+					// Anyways.. We will just create a blank one
+					$id = 'curry-search-input_blank'.uniqid();
+					$form = '<form method="get" action="' . esc_url( home_url( '/' ) ) . '">
+<input value"'.get_search_query().'" id="'.$id.'" autocomplete="off" type="search" />
+<input value="'.esc_html__("Search", "currysearch").'" type="submit"></form>';
+				}
+				// Keep it for one hour
+				set_transient(CurrySearchConstants::SEARCHFORMTRANSIENT, $form, 3600);
+			}
+			$session_hash = CurrySearchUtils::get_session_hash();
+			$public_api_key = CurrySearch::get_public_api_key();
+			$url = CurrySearchConstants::APPLICATION_URL.':'.CurrySearch::get_port().'/'.CurrySearchConstants::QAC_ACTION;
+			if (isset($settings['ac_colors'])) {
+				$style=CurrySearchConstants::autocomplete_style($settings['ac_colors']);
+			} else {
+				$style = '';
+			}
+			return $form.$style.CurrySearchConstants::elm_hook($url, $public_api_key, $session_hash, $id);
+		}
 	}
 
 	/**
@@ -461,12 +525,6 @@ class CurrySearchQuery{
 	private $page;
 	/** The session hash for this request*/
 	private $hash;
-
-	/** Filter results needed by the Sidebar Widget **/
-	public $filter_results;
-
-	/** Hierarchy results needed by the Sidebar Widget **/
-	public $hierarchy_results;
 
 	/**
 	 * Constructor.
@@ -541,8 +599,6 @@ class CurrySearchQuery{
 		$decoded = json_decode($response, true);
 		$this->query_result = $decoded['posts'];
 		$this->result_count = $decoded['estimated_count'];
-		$this->filter_results = $decoded['filters'];
-		$this->hierarchy_results = $decoded['hierarchies'];
 	}
 
 

@@ -14,7 +14,6 @@ if (null !== CurrySearch::get_port()) {
 <li><?php printf(esc_html__('Next scheduled reindexing: %s', 'currysearch'), date_i18n( __('Y-m-d H:i:s', 'currysearch'), wp_next_scheduled('currysearch_reindexing'))) ?></li>
 	  <li><b><a target='_blank' href='<?php echo CurrySearch::backend_link() ?>'><?php printf(esc_html__('More statistics on my.curry-search.com', 'currysearch'))?></a></b></li>
 </ul>
-
 <?php
 } else {
 	echo esc_html__('Error Occured! Reindexing Needed!', 'currysearch');

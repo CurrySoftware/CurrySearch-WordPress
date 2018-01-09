@@ -32,6 +32,13 @@ class CurrySearchAdminPage {
 			}
 			$settings = get_option(CurrySearchConstants::SETTINGS, $default = array());
 			$settings['indexing_post_types'] = $activated_post_types;
+			if (isset($_POST['inject_autocomplete'])) {
+				$settings['inject_autocomplete'] = $_POST['inject_autocomplete'];
+			} else  {
+				unset($settings['inject_autocomplete']);
+			}
+			$settings['ac_colors'] = [$_POST['ac_text_col'], $_POST['ac_bkg_col'], $_POST['ac_active_text_col'], $_POST['ac_active_bkg_col']];
+			
 			update_option(CurrySearchConstants::SETTINGS, $settings, 'no');
 		}
 
@@ -42,10 +49,34 @@ class CurrySearchAdminPage {
 		register_setting(CurrySearchConstants::SETTINGS_GROUP, CurrySearchConstants::SETTINGS);
 		add_settings_section(CurrySearchConstants::SETTINGS_INDEXING_SECTION, __('Indexing Settings', 'currysearch'), array($this, 'indexing_settings'), 'currysearch');
 		add_settings_field(CurrySearchConstants::SETTINGS_POST_TYPE_FIELD, __('Searchable Post Types', 'currysearch'), array($this, 'indexing_post_types'), 'currysearch', CurrySearchConstants::SETTINGS_INDEXING_SECTION);
+		add_settings_field(CurrySearchConstants::SETTINGS_AUTOCOMPLETE_FIELD, __('Autocomplete', 'currysearch'), array($this, 'autocomplete_injection'), 'currysearch', CurrySearchConstants::SETTINGS_INDEXING_SECTION);
 	}
 
 	function indexing_settings() {
 		echo '';
+	}
+
+	function autocomplete_injection() {
+		$settings = get_option(CurrySearchConstants::SETTINGS, $default = false);
+		if (isset($settings['inject_autocomplete'])) {
+			echo '<label><input type="checkbox" name="inject_autocomplete" checked/>'.esc_html__('Active', 'currysearch').'</label><br /><hr />';
+		} else {
+			echo '<label><input type="checkbox" name="inject_autocomplete"/>'.esc_html__('Active', 'currysearch').'</label><br /><hr />';
+		}
+		echo '<h4>Style:</h4>';
+		if (isset($settings['ac_colors'])) {
+			echo '<label>'.esc_html__('Text Color', 'currysearch').'</label><input type="text" name="ac_text_col" value="'.$settings['ac_colors'][0].'" data-default-color="'.$settings['ac_colors'][0].'" class="cs-color-field" /><br />';
+			echo '<label>'.esc_html__('Background Color', 'currysearch').'</label><input type="text" name="ac_bkg_col" value="'.$settings['ac_colors'][1].'" data-default-color="'.$settings['ac_colors'][1].'" class="cs-color-field" /><br />';
+			echo '<label>'.esc_html__('Active Item: Text Color', 'currysearch').'</label><input type="text" name="ac_active_text_col" value="'.$settings['ac_colors'][2].'" data-default-color="'.$settings['ac_colors'][2].'" class="cs-color-field" /><br />';
+			echo '<label>'.esc_html__('Active Item: Background Color', 'currysearch').'</label><input type="text" name="ac_active_bkg_col" value="'.$settings['ac_colors'][3].'" data-default-color="'.$settings['ac_colors'][3].'" class="cs-color-field" /><br />';
+		} else {
+			echo '<label>'.esc_html__('Text Color', 'currysearch').'</label><input type="text" name="ac_text_col" value="#000" data-default-color="#000" class="cs-color-field" /><br />';
+			echo '<label>'.esc_html__('Background Color', 'currysearch').'</label><input type="text" name="ac_bkg_col" value="#DDD" data-default-color="#DDD" class="cs-color-field" /><br />';
+			echo '<label>'.esc_html__('Active Item: Text Color', 'currysearch').'</label><input type="text" name="ac_active_text_col" value="#555" data-default-color="#555" class="cs-color-field" /><br />';
+			echo '<label>'.esc_html__('Active Item: Background Color', 'currysearch').'</label><input type="text" name="ac_active_bkg_col" value="#EEE" data-default-color="#EEE" class="cs-color-field" /><br />';
+		}
+			
+		
 	}
 
 	function indexing_post_types() {
@@ -69,5 +100,6 @@ class CurrySearchAdminPage {
 			echo '</label></li>';
 		}
 		echo '</ul>';
+		
 	}
 }
