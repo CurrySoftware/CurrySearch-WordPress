@@ -6,21 +6,20 @@ Stable tag: trunk
 Tested up to: 4.9
 License: GPL3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
-Description: CurrySearch is an better cloud-based search for WordPress. It supports custom post types, advanced autocomplete, relevance based results and filter.
+Description: CurrySearch is an better cloud-based search for WordPress. It returns relevance based results and supports custom post types and autocomplete.
 
 == Description ==
 
-CurrySearch is an better cloud-based search for WordPress. It supports custom post types, advanced autocomplete, relevance based results and filter.
+CurrySearch is an better cloud-based search for WordPress. It returns relevance based results and supports custom post types and autocomplete.
 
 This advanced search plugin provides following functionality:
 
 * Search and find any post types including custom ones
 * A error-tolerant query-autocompletion
 * Advanced relevance based full-text search
-* Filter for search results
 * Detailed usage statistics
 
-CurrySearch tries to blend in into your theme by reusing its search form.
+CurrySearch tries to blend in into your theme by using its search form.
 As the computationaly heavy work of this plugin is done on the search servers in the CurrySearch System, it is also very lightweight.
 
 = Speedy and Relevant Search Results =
@@ -36,11 +35,6 @@ Another feature, not built into WordPress is query autocomple. Users know and ap
 
 CurrySearch offers a fast and error-tolerant autocomplete.
 Your content is fed into the system and it thus allows relevant results.
-
-= Search Result Filter by Tags =
-
-Another important feature that WordPress does not offer out-of-the-box are search result filters.
-It makes finding desired documents simpler and faster. CurrySearch supports the search result filters by tags by using your taxonomies.
 
 The user-interface integrates into your theme and is intuitive for the user.
 
@@ -76,11 +70,7 @@ Following languages are supported:
 
 == Installation ==
 1. Activate the search plugin
-2. Place the CurrySearch Sidebar Widget on your Site if you have a Sidebar
-OR
-3. Call the function "CurrySearchUtils::autocomplete('SEARCH_FIELD_ID')" somewhere in your searchform.php.
-'SEARCH_FIELD_ID' beeing the Id of the input field that needs autocomplete.
-Do not forget to disable default browser autocomplete on that field by specifying "autocomplete='off'"!
+2. Enable or Disable autocomplete and customize searched post types on Settings -> CurrySearch
 
 == Frequently Asked Questions ==
 
@@ -109,13 +99,15 @@ Go to Settings -> CurrySearch to do that.
 
 == Screenshots ==
 
-1. Filter your advanced search results by tag
-2. Advanced relevance sorted search results
-3. Let CurrySearch autocomplete your search query
-4. CurrySearch Settings and Statistics Page showing info and allowing reindexing
-5. Select all post types that should be searchable
+1. Advanced relevance sorted search results
+2. Let CurrySearch autocomplete your search query
+3. CurrySearch Settings and Statistics Page showing info and allowing reindexing
+4. Select all post types that should be searchable
 
 == Changelog ==
+
+= 1.4 =
+Restructure CurrySearch so it is easier to integrate and use.
 
 = 1.3.1 =
 Improved search results by also evaluating categories and tags

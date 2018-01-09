@@ -68,9 +68,10 @@ class CurrySearchConstants {
   var suggest_rect = $suggest_list.getBoundingClientRect();
 
   var height_diff = search_rect.bottom - suggest_rect.top;
+  var hoz_diff = search_rect.left - suggest_rect.left;
   var width = search_rect.right - search_rect.left;
   var neg_height_diff = -height_diff;
-  $suggest_list.style = 'width: '+ width + 'px;margin-top: ' + height_diff+'px;';
+  $suggest_list.style = 'width: '+ width + 'px;margin-top: ' + height_diff+'px;margin-left: '+hoz_diff+'px; position:absolute;';
   var $app_id = Elm.CurrySearchAutoComplete.embed($suggest_list, flags);
 
   $search_field.addEventListener('keydown', function(e) {
@@ -94,7 +95,7 @@ class CurrySearchConstants {
   $app_id.ports.suggest_choice.subscribe(function(term) {
       $search_field.value = term;
       $search_field.focus();
-  });
+   });
 </script>";
 	}
 }
