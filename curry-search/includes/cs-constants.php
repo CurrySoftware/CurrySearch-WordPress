@@ -71,7 +71,7 @@ class CurrySearchConstants {
   var hoz_diff = search_rect.left - suggest_rect.left;
   var width = search_rect.right - search_rect.left;
   var neg_height_diff = -height_diff;
-  $suggest_list.style = 'width: '+ width + 'px;margin-top: ' + height_diff+'px;margin-left: '+hoz_diff+'px; position:absolute;';
+  $suggest_list.style = 'z-index:100;width: '+ width + 'px;margin-top: ' + height_diff+'px;margin-left: '+hoz_diff+'px; position:absolute;';
   var $app_id = Elm.CurrySearchAutoComplete.embed($suggest_list, flags);
 
   $search_field.addEventListener('keydown', function(e) {
