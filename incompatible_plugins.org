@@ -1,0 +1,4 @@
+| Name            | Url                                               | Problems          |
+|-----------------+---------------------------------------------------+-------------------|
+| Relevanssi      | https://wordpress.org/plugins/relevanssi/         | No Search Results |
+| iTheme Security | https://wordpress.org/plugins/better-wp-security/ | Blocked Umlaute   |
