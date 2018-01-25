@@ -106,6 +106,9 @@ Go to Settings -> CurrySearch to do that.
 
 == Changelog ==
 
+= 1.4.1 =
+Fixed Bug where an invalid search form by the used theme resulted in a flawed search experience.
+
 = 1.4 =
 Restructure CurrySearch so it is easier to integrate and use.
 
