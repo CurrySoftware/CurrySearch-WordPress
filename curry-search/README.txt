@@ -22,6 +22,8 @@ This advanced search plugin provides following functionality:
 CurrySearch tries to blend in into your theme by using its search form.
 As the computationaly heavy work of this plugin is done on the search servers in the CurrySearch System, it is also very lightweight.
 
+[youtube https://www.youtube.com/watch?v=Yv4OIQfSuAQ]
+
 = Speedy and Relevant Search Results =
 
 Contrary to the built-in search of WordPress CurrySearch lists better and more relevant results further up in the result list.
