@@ -108,6 +108,9 @@ Go to Settings -> CurrySearch to do that.
 
 == Changelog ==
 
+= 1.4.2 =
+Fixed Bug where CurrySearch would hook into some queries it was not supposed to hook into.
+
 = 1.4.1 =
 Fixed Bug where an invalid search form by the used theme resulted in a flawed search experience.
 
