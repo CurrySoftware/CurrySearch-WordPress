@@ -469,8 +469,7 @@ class CurrySearch {
 	 * Be sure to check out 'CurrySearchQuery' for details!
 	 */
 	static function intercept_query($query) {
-		if (is_search() && isset($query->query['s'])) {
-			//Intercept!
+		if (($query->is_search() || is_search()) && isset($query->query['s']) && ($query->query['s'] !== '')) {
 			self::$cs_query =
 					  new CurrySearchQuery(
 						  CurrySearch::get_apikey(),
