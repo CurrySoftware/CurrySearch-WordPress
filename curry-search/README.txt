@@ -3,7 +3,7 @@ Contributors: currysoftware
 Tags: advanced search, search, better search, filter, taxonomy, autocomplete
 Requires at least: 4.0
 Stable tag: trunk
-Tested up to: 4.9
+Tested up to: 5.0
 License: GPL3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 Description: CurrySearch is an better cloud-based search for WordPress. It returns relevance based results and supports custom post types and autocomplete.
@@ -107,6 +107,10 @@ Go to Settings -> CurrySearch to do that.
 4. Select all post types that should be searchable
 
 == Changelog ==
+
+= 1.5 =
+Fixed Bug where CurrySearch would not index attachments.
+Tested compatibility with WordPress 5.0.
 
 = 1.4.2 =
 Fixed Bug where CurrySearch would hook into some queries it was not supposed to hook into.
