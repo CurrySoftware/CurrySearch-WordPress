@@ -50,6 +50,7 @@ class CurrySearchConstants {
 		$search_field = 'search_field'.uniqid();
 		$suggest_list = 'suggest_list'.uniqid();
 		return "<div id='$autocomplete_id'></div>
+
 <script>
   function insertAfter(referenceNode, newNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);

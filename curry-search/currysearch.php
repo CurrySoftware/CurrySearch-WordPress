@@ -214,11 +214,32 @@ class CurrySearch {
 			$postlist = get_posts(array(
 				'numberposts' => -1,
 				'post_type' => $post_types,
-				'post_status' => 'publish',
+			   	'post_status' => 'publish',
 			));
 		}
 
+
+		// Get all potential childposts with post_status inherit
+		// Get them, and then check if their parents are published
+		if (!isset($post_types) || empty($post_types)) {
+			$child_postlist = array();
+		} else {
+			$child_postlist = get_posts(array(
+				'numberposts' => -1,
+				'post_type' => $post_types,
+			   	'post_status' => 'inherit',
+			));
+		}
+
+
+		foreach ($child_postlist as $childpost) {
+			if (get_post_status($childpost->post_parent) == 'publish') {
+				array_push($postlist, $childpost);
+			}
+		}
+
 		$published_posts = count($postlist);
+
 
 		//Initiate indexing
 		CurrySearchUtils::call_ms(
@@ -435,7 +456,7 @@ class CurrySearch {
 					}
 					// turn browser autocomplete off. We ship our own
 					$input_field =str_replace('<input', '<input autocomplete="off"', $input_field);
-					
+
 					//Now replace the input field
 					$form = preg_replace('/<input[^>]*name="s"[^>]*\/>/', $input_field, $form);
 				} else {
