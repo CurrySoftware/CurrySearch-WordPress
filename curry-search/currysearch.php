@@ -243,7 +243,7 @@ class CurrySearch {
 		if (CurrySearch::current_plan_sufficient()) {
 			return;
 		}
-		$label = esc_html__('Zu viele Dokumente', 'currysearch');
+		$label = esc_html__('Too many documents', 'currysearch');
 		$link = CurrySearch::purchase_link();
 		$upgradenote = esc_html__('Please upgrade your CurrySearch plan!', 'currysearch');
 		$settingslab = esc_html__('CurrySearch Settings', 'currysearch');
@@ -254,7 +254,7 @@ class CurrySearch {
 		echo "
 <div class='notice notice-warning is-dismissible'>
   <p><strong><span style='display: block; margin: 0.5em 0.5em 0 0; clear: both;'>
-		  Too many documents: <a href='$link'>$upgradenote</a>
+		  $label: <a href='$link'>$upgradenote</a>
   </span></strong></p>
   <span style='display: block; margin: 0.5em 0.5em 0 0; clear: both;'>
     <a href='$settingsurl'>$settingslab</a> | <a href='$dissmissurl' class='dismiss-notice'>$dissmisslab</a></span>
