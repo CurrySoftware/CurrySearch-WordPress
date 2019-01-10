@@ -18,6 +18,12 @@ class CurrySearchAdminPage {
 			wp_die( __('You do not have sufficient permissions to access this page.') );
 		}
 
+		if (isset($_GET['dissmiss_warning']) && check_admin_referer('dissmiss_warning')) {
+			$settings = get_option(CurrySearchConstants::SETTINGS, $default = array());
+			$settings['show_plan_warning'] = false;
+			update_option(CurrySearchConstants::SETTINGS, $settings, 'no');
+		}
+
 		if (isset($_POST['reindex_requested']) && check_admin_referer('reindex')) {
 			CurrySearch::full_indexing();
 		}

@@ -12,7 +12,21 @@ if (null !== CurrySearch::get_port()) {
 <li><?php printf(esc_html__('Detected Language: %s', 'currysearch'), CurrySearch::get_detected_language()) ?></li>
 <li><?php printf(esc_html__('Number of indexed documents: %s', 'currysearch'), CurrySearch::get_indexed_documents()) ?></li>
 <li><?php printf(esc_html__('Next scheduled reindexing: %s', 'currysearch'), date_i18n( __('Y-m-d H:i:s', 'currysearch'), wp_next_scheduled('currysearch_reindexing'))) ?></li>
-	  <li><b><a target='_blank' href='<?php echo CurrySearch::backend_link() ?>'><?php printf(esc_html__('More statistics on my.curry-search.com', 'currysearch'))?></a></b></li>
+<li><?php printf(esc_html__('Current Plan: %s', 'currysearch'), CurrySearch::get_current_plan()) ?></li>
+  <?php if (!CurrySearch::current_plan_sufficient()) { ?>
+<li>
+  <b>
+      <?php printf(esc_html__('Your current plan is not sufficient for your WordPress installation:', 'currysearch'))?>
+    <a target='_blank' href='<?php echo CurrySearch::purchase_link() ?>'>
+      <?php printf(esc_html__('Please select a fitting one!', 'currysearch'))?>
+    </a>
+  </b>
+</li>
+<li>
+  <b> <?php printf(esc_html__('14 days test phase ', 'currysearch'))?>  |  <?php printf(esc_html__('automatic cancellation on deactivation', 'currysearch'))?>  |  <?php printf(esc_html__('cancel any time', 'currysearch'))?> </b>
+          <?php }else {?>
+<li><b><a target='_blank' href='<?php echo CurrySearch::purchase_link() ?>'><?php printf(esc_html__('Get CurrySearch Premium and a faster and better search experience. Test 14 days for free. Automatically cancels when plugin is deactivated.', 'currysearch'))?></a></b></li>
+<?php } ?>
 </ul>
 <?php
 } else {

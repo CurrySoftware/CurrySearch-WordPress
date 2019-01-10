@@ -54,6 +54,8 @@ add_action('admin_menu', array('CurrySearch', 'init_menu'));
 
 // Hook for cron
 add_action('currysearch_reindexing', array('CurrySearch', 'reindexing'));
+add_action( 'admin_notices', array('CurrySearch', 'plan_warning') );
+
 
 /**
  * The central static class in this plugin. All methods are static, nothing is to be instantiated!
@@ -115,6 +117,36 @@ class CurrySearch {
 		return CurrySearch::options()['last_indexing'];
 	}
 
+
+	/**
+	 * Currently selected plan. One of Free, Small, Medium, Large or Premium
+	 */
+	static function get_current_plan() {
+		return CurrySearch::options()['plan'];
+	}
+
+	/**
+	 * Check if the currently selected plan is sufficient for this wp instance
+	 */
+	static function current_plan_sufficient() {
+		switch (CurrySearch::options()['plan']) {
+			case "Free":
+				return CurrySearch::get_indexed_documents() <= 50;
+
+			case "Small":
+				return CurrySearch::get_indexed_documents() <= 200;
+
+			case "Medium":
+				return CurrySearch::get_indexed_documents() <= 1000;
+
+			case "Large":
+				return CurrySearch::get_indexed_documents() <= 5000;
+
+			case "Premium":
+				return true;
+		}
+	}
+
 	/**
 	 * Language of the content as detected by the CurrySearch System
 	 */
@@ -147,6 +179,15 @@ class CurrySearch {
 	}
 
 	/**
+	 * Creates the link to the purchase site...
+	 * Returns a full url
+	 */
+	static function purchase_link() {
+		$key = CurrySearch::get_apikey();
+		return "https://my.curry-search.com/kaufen/?apiKey=".$key;
+	}
+
+	/**
 	 * Gets the status from the CurrySearch System
 	 */
 	static function get_status() {
@@ -155,6 +196,7 @@ class CurrySearch {
 		$options = CurrySearch::options();
 		$options['detected_language'] = $status->detected_language;
 		$options['document_count'] = $status->document_count;
+		$options['plan'] = $status->plan;
 		$date = new DateTime();
 		$options['last_indexing'] = $date->setTimestamp($status->last_indexing->secs_since_epoch);
 		CurrySearch::$options = $options;
@@ -191,6 +233,34 @@ class CurrySearch {
 
 	static function load_textdomain() {
 		load_plugin_textdomain('currysearch', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/');
+	}
+
+	static function plan_warning() {
+		$settings = get_option(CurrySearchConstants::SETTINGS);
+		if (isset($settings['show_plan_warning']) && $settings['show_plan_warning'] == false) {
+			return;
+		}
+		if (CurrySearch::current_plan_sufficient()) {
+			return;
+		}
+		$label = esc_html__('Zu viele Dokumente', 'currysearch');
+		$link = CurrySearch::purchase_link();
+		$upgradenote = esc_html__('Please upgrade your CurrySearch plan!', 'currysearch');
+		$settingslab = esc_html__('CurrySearch Settings', 'currysearch');
+		$dissmisslab = esc_html__('Dissmiss this warning', 'currysearch');
+		$settingsurl = admin_url('options-general.php?page=currysearch');
+		$dissmissurl = wp_nonce_url(admin_url('options-general.php?page=currysearch&dissmiss_warning=true'), 'dissmiss_warning');
+
+		echo "
+<div class='notice notice-warning is-dismissible'>
+  <p><strong><span style='display: block; margin: 0.5em 0.5em 0 0; clear: both;'>
+		  Too many documents: <a href='$link'>$upgradenote</a>
+  </span></strong></p>
+  <span style='display: block; margin: 0.5em 0.5em 0 0; clear: both;'>
+    <a href='$settingsurl'>$settingslab</a> | <a href='$dissmissurl' class='dismiss-notice'>$dissmisslab</a></span>
+</strong></p><button type='button' class='notice-dismiss'><span class='screen-reader-text'>Dissmiss this warning</span></button>
+    </div>
+";
 	}
 
 	/**
