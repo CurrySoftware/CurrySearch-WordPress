@@ -247,9 +247,9 @@ class CurrySearch {
 		$link = CurrySearch::purchase_link();
 		$upgradenote = esc_html__('Please upgrade your CurrySearch plan!', 'currysearch');
 		$settingslab = esc_html__('CurrySearch Settings', 'currysearch');
-		$dissmisslab = esc_html__('Dissmiss this warning', 'currysearch');
+		$dismisslab = esc_html__('Dismiss this warning', 'currysearch');
 		$settingsurl = admin_url('options-general.php?page=currysearch');
-		$dissmissurl = wp_nonce_url(admin_url('options-general.php?page=currysearch&dissmiss_warning=true'), 'dissmiss_warning');
+		$dismissurl = wp_nonce_url(admin_url('options-general.php?page=currysearch&dismiss_warning=true'), 'dismiss_warning');
 
 		echo "
 <div class='notice notice-warning is-dismissible'>
@@ -257,8 +257,8 @@ class CurrySearch {
 		  $label: <a href='$link'>$upgradenote</a>
   </span></strong></p>
   <span style='display: block; margin: 0.5em 0.5em 0 0; clear: both;'>
-    <a href='$settingsurl'>$settingslab</a> | <a href='$dissmissurl' class='dismiss-notice'>$dissmisslab</a></span>
-</strong></p><button type='button' class='notice-dismiss'><span class='screen-reader-text'>Dissmiss this warning</span></button>
+    <a href='$settingsurl'>$settingslab</a> | <a href='$dismissurl' class='dismiss-notice'>$dismisslab</a></span>
+</strong></p><button type='button' class='notice-dismiss'><span class='screen-reader-text'>$dismisslab</span></button>
     </div>
 ";
 	}

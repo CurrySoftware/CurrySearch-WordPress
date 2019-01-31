@@ -33,7 +33,7 @@ The CurrySearch System is optimised for advanced speed and thus answers queries 
 
 = Error-Tolerant Autocomplete Search Queries =
 
-Another feature, not built into WordPress is query autocomple. Users know and appreciate that feature from mayor sites, especially when on mobile devices.
+Another feature, not built into WordPress is query autocomplete. Users know and appreciate that feature from major sites, especially when on mobile devices.
 
 CurrySearch offers a fast and error-tolerant autocomplete.
 Your content is fed into the system and it thus allows relevant results.
@@ -109,7 +109,7 @@ Go to Settings -> CurrySearch to do that.
 == Changelog ==
 
 = 1.6 =
-Fixed bug, where currysearch would intercept queries on admin pages.
+Fixed bug, where CurrySearch would intercept queries on admin pages.
 Tested compatibility with WordPress 5.0.
 
 = 1.5 =
@@ -141,7 +141,7 @@ Introduced daily reindexing and using autocomplete without using the widget
 Adjusted to API-Changes
 
 = 1.0.5 =
-Fixed bug that occured when using PHP 7.1
+Fixed bug that occurred when using PHP 7.1
 
 = 1.0.4 =
 Fixed bug where indexing would fail if no content types are selected

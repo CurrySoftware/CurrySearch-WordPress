@@ -42,7 +42,7 @@ class CurrySearchUtils{
 	private static function api_admin_warn() {
 		?>
 		<div class="notice notice-warn is-dismissible">
-        	<p>Problem occured during communication with the CurrySearch API! If problem persists please contact support@curry-software.com</p>
+        	<p>Problem occurred during communication with the CurrySearch API! If problem persists please contact support@curry-software.com</p>
 		</div>
 		<?php
 	}
