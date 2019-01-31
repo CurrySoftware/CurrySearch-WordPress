@@ -18,7 +18,7 @@ class CurrySearchAdminPage {
 			wp_die( __('You do not have sufficient permissions to access this page.') );
 		}
 
-		if (isset($_GET['dissmiss_warning']) && check_admin_referer('dissmiss_warning')) {
+		if (isset($_GET['dismiss_warning']) && check_admin_referer('dismiss_warning')) {
 			$settings = get_option(CurrySearchConstants::SETTINGS, $default = array());
 			$settings['show_plan_warning'] = false;
 			update_option(CurrySearchConstants::SETTINGS, $settings, 'no');
@@ -44,7 +44,7 @@ class CurrySearchAdminPage {
 				unset($settings['inject_autocomplete']);
 			}
 			$settings['ac_colors'] = [$_POST['ac_text_col'], $_POST['ac_bkg_col'], $_POST['ac_active_text_col'], $_POST['ac_active_bkg_col']];
-			
+
 			update_option(CurrySearchConstants::SETTINGS, $settings, 'no');
 		}
 
@@ -81,8 +81,8 @@ class CurrySearchAdminPage {
 			echo '<label>'.esc_html__('Active Item: Text Color', 'currysearch').'</label><input type="text" name="ac_active_text_col" value="#555" data-default-color="#555" class="cs-color-field" /><br />';
 			echo '<label>'.esc_html__('Active Item: Background Color', 'currysearch').'</label><input type="text" name="ac_active_bkg_col" value="#EEE" data-default-color="#EEE" class="cs-color-field" /><br />';
 		}
-			
-		
+
+
 	}
 
 	function indexing_post_types() {
@@ -106,6 +106,6 @@ class CurrySearchAdminPage {
 			echo '</label></li>';
 		}
 		echo '</ul>';
-		
+
 	}
 }
